@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">NoteX</string>
+    <string name="app_name_release" translatable="false">NoteX</string>
+    <string name="app_name_debug" translatable="false">NoteX Dev</string>
+    <string name="notification_channel_id" translatable="false">12345678</string>
+    <string name="notification_channel_name" translatable="false">NoteX</string>
+    <string name="notification_channel_description" translatable="false">Default notification channel</string>
+
+    <string name="welcome_message">Welcome to NoteX</string>
 </resources>

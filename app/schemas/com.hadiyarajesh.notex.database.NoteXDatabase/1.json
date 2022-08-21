@@ -1,0 +1,46 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "75ca2af815c8572cc038ae9b530899c6",
+    "entities": [
+      {
+        "tableName": "Note",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`noteId` INTEGER NOT NULL, `text` TEXT NOT NULL, `lastModified` TEXT NOT NULL, PRIMARY KEY(`noteId`))",
+        "fields": [
+          {
+            "fieldPath": "noteId",
+            "columnName": "noteId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "text",
+            "columnName": "text",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastModified",
+            "columnName": "lastModified",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "noteId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '75ca2af815c8572cc038ae9b530899c6')"
+    ]
+  }
+}
