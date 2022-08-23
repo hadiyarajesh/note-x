@@ -22,6 +22,7 @@ fun NoteXNavigation(
     ) {
         composable(route = Screens.Notes.route) {
             val notesViewModel = hiltViewModel<NotesViewModel>()
+
             NotesScreen(
                 navController = navController,
                 notesViewModel = notesViewModel
