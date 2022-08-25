@@ -12,9 +12,9 @@ git remote add upstream https://github.com/NoteXCommunity/note-x.git
 ```
 ### Create a Branch for your feature
 
-Make sure your branch is up-to-date with ```dev``` and create a branch based on your name and whether it is a bugfix or a feature.  (The name `name/feature/my-feature` or `name/bugfix/foo-button-fixed` is an example). 
+Make sure your branch is up-to-date with ```dev``` and create a branch based on your name and whether it is a bugfix or a feature.  (The name `github-username/feature/my-feature` or `github-username/bugfix/foo-button-fixed` is an example). 
 ```
-Please use the convention -> your-name/feature/feature-name or your-name/bugfix/bug-name
+Please use the convention -> github-username/feature/feature-name or github-username/bugfix/bug-name
 ```
 
 Please follow the commands in order before you create your branch
@@ -23,7 +23,7 @@ git checkout master
 git pull origin master
 git checkout dev
 git pull origin dev
-git checkout -b name/feature/my-feature
+git checkout -b github-username/feature/my-feature
 ```
 ### Write Code
 
@@ -56,14 +56,14 @@ git pull origin dev
 ### Push to your branch
 
 ```
-git push origin your-name/feature/my-feature
+git push origin github-username/feature/my-feature
 ```
 Make sure you format your code before you push as per the best practices for better and enhanced readability. You can use the default code formatter provided by Android Studio by pressing **Ctrl + Alt + L** on your windows device/**Alt + Shift + L** on your Linux device or **Command + Option + L** on your Mac.
 
 ### Make a Pull Request
 
 Go to https://github.com/NoteXCommunity/note-x and select your name and feature/bugfix branch. Click the 'Pull Request' button and fill out the form. 
-```[Please note to open a pull request to the dev branch only]```
+```[Please note to open a pull request to your team-lead branch only.]```
 
 Pull requests are usually reviewed within a few days.
 
