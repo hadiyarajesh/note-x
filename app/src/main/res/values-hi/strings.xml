@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_message">NoteX में आपका स्वागत है</string>
+    <string name="retry">फिर से प्रयास करें</string>
+    <string name="empty_message">यहाँ सब खाली है</string>
 </resources>

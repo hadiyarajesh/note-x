@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.NoteXDatabase
+import com.hadiyarajesh.notex.database.dao.FolderDao
 import com.hadiyarajesh.notex.database.dao.NoteDao
+import com.hadiyarajesh.notex.database.dao.ReminderDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,4 +30,12 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideNoteDao(db: NoteXDatabase): NoteDao = db.noteDao
+
+    @Provides
+    @Singleton
+    fun provideReminderDao(db: NoteXDatabase): ReminderDao = db.reminderDao
+
+    @Provides
+    @Singleton
+    fun provideFolderDao(db: NoteXDatabase): FolderDao = db.folderDao
 }
