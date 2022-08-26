@@ -10,14 +10,26 @@ sealed class Screens(
 ) {
     object Notes : Screens(
         route = "Notes",
-        icon = R.drawable.ic_launcher_foreground,
-        selectedIcon = R.drawable.ic_launcher_foreground
+        icon = R.drawable.ic_note_outlined,
+        selectedIcon = R.drawable.ic_note_filled
+    )
+
+    object AddNote : Screens(
+        route = "AddNote",
+        icon = R.drawable.ic_note_outlined,
+        selectedIcon = R.drawable.ic_note_filled
     )
 
     object Reminders : Screens(
         route = "Reminders",
-        icon = R.drawable.ic_launcher_foreground,
-        selectedIcon = R.drawable.ic_launcher_foreground
+        icon = R.drawable.ic_task_outlined,
+        selectedIcon = R.drawable.ic_task_filled
+    )
+
+    object Settings : Screens(
+        route = "Settings",
+        icon = R.drawable.ic_task_outlined,
+        selectedIcon = R.drawable.ic_task_filled
     )
 
     fun withArgs(vararg args: Any): String {
@@ -29,3 +41,8 @@ sealed class Screens(
         }
     }
 }
+
+val bottomNavItems = listOf(
+    Screens.Notes,
+    Screens.Reminders
+)

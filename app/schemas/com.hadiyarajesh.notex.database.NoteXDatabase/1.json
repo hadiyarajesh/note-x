@@ -2,36 +2,214 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "75ca2af815c8572cc038ae9b530899c6",
+    "identityHash": "6497abb2507dda63536134fa2497babc",
     "entities": [
       {
         "tableName": "Note",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`noteId` INTEGER NOT NULL, `text` TEXT NOT NULL, `lastModified` TEXT NOT NULL, PRIMARY KEY(`noteId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`noteId` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT, `content` TEXT, `archived` INTEGER NOT NULL, `archivedOn` TEXT, `color` TEXT, `createdOn` TEXT NOT NULL, `updatedOn` TEXT NOT NULL, `parentFolderId` INTEGER)",
         "fields": [
           {
             "fieldPath": "noteId",
             "columnName": "noteId",
             "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "archived",
+            "columnName": "archived",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "text",
-            "columnName": "text",
+            "fieldPath": "archivedOn",
+            "columnName": "archivedOn",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdOn",
+            "columnName": "createdOn",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "lastModified",
-            "columnName": "lastModified",
+            "fieldPath": "updatedOn",
+            "columnName": "updatedOn",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "parentFolderId",
+            "columnName": "parentFolderId",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
             "noteId"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Reminder",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reminderId` INTEGER PRIMARY KEY AUTOINCREMENT, `content` TEXT NOT NULL, `reminderTime` TEXT NOT NULL, `repeat` TEXT NOT NULL, `cancelled` INTEGER NOT NULL, `cancelledOn` TEXT, `completed` INTEGER NOT NULL, `completedOn` TEXT, `color` TEXT, `createdOn` TEXT NOT NULL, `updatedOn` TEXT NOT NULL, `parentFolderId` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "reminderId",
+            "columnName": "reminderId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderTime",
+            "columnName": "reminderTime",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "repeat",
+            "columnName": "repeat",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cancelled",
+            "columnName": "cancelled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cancelledOn",
+            "columnName": "cancelledOn",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "completed",
+            "columnName": "completed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "completedOn",
+            "columnName": "completedOn",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdOn",
+            "columnName": "createdOn",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedOn",
+            "columnName": "updatedOn",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentFolderId",
+            "columnName": "parentFolderId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "reminderId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Folder",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`folderId` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `description` TEXT, `folderType` TEXT NOT NULL, `color` TEXT, `createdOn` TEXT NOT NULL, `updatedOn` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "folderId",
+            "columnName": "folderId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "folderType",
+            "columnName": "folderType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdOn",
+            "columnName": "createdOn",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedOn",
+            "columnName": "updatedOn",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "folderId"
+          ],
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -40,7 +218,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '75ca2af815c8572cc038ae9b530899c6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6497abb2507dda63536134fa2497babc')"
     ]
   }
 }
