@@ -1,17 +1,30 @@
 package com.hadiyarajesh.notex.ui.note
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.hadiyarajesh.notex.repository.NotesRepository
-import com.hadiyarajesh.notex.utility.TAG
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.hadiyarajesh.notex.database.entity.Note
+import com.hadiyarajesh.notex.repository.notes.NotesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel @Inject constructor(
     private val notesRepository: NotesRepository
 ) : ViewModel() {
-    init {
-        Log.i(TAG, "${this.javaClass.name} initialized")
+    // Get all notes as soon as collector collect this flow
+    val notes: Flow<PagingData<Note>> =
+        notesRepository
+            .getAllNotes()
+            .cachedIn(viewModelScope)
+
+    fun createNote(
+        title: String?,
+        content: String?
+    ) = viewModelScope.launch {
+        notesRepository.createNote(title = title, content = content)
     }
 }
