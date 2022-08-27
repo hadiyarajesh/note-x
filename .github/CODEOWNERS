@@ -5,13 +5,13 @@
 # the repo. Unless a later match takes precedence,
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
-*   @NoteXCommunity/code-reviewer
+@NoteXCommunity/code-reviewer
 
 # Order is important; the last matching pattern takes the most
 # precedence. When someone opens a pull request that only
 # modifies in some specific branch, then only specific team and
 # not the global owner(s) will be requested for a review.
-    branch_hadiyarajesh ** @hadiyarajesh
-    branch_swapnil_bhojwani ** @swapnil20711
+branch_hadiyarajesh ** @hadiyarajesh
+branch_swapnil_bhojwani ** @swapnil20711
 #    branch_geet_gobind **
 #    branch_loevleen
