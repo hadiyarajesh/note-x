@@ -89,7 +89,7 @@ private fun NoteFolderScreenPreview() {
                         .aspectRatio(1f)
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color.LightGray),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Cente
                 ) {
                     Text(
                         textAlign = TextAlign.Center,
