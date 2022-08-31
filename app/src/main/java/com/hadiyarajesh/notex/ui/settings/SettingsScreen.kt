@@ -25,7 +25,6 @@ import com.hadiyarajesh.notex.R
 fun SettingsScreen(
     navController: NavController
 ) {
-
     val settingsItems = listOf(
         SettingsItems.Notifications,
         SettingsItems.Sounds,
@@ -85,7 +84,7 @@ fun SettingsItem(item: SettingsItems) {
                 .height(80.dp)
                 .width(300.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Start
         ) {
             Spacer(modifier = Modifier.width(18.dp))
             Icon(
@@ -104,7 +103,7 @@ fun SettingsItem(item: SettingsItems) {
             )
 
             Text(
-                modifier = Modifier.weight(1f),
+//                modifier = Modifier.weight(1f),
                 text = item.name,
                 textAlign = TextAlign.Center
             )
