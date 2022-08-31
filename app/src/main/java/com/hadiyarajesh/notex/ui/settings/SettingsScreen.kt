@@ -115,6 +115,6 @@ fun SettingsItem(item: SettingsItems) {
 @Composable
 fun SettingsItemPreview() {
     Surface {
-        SettingsItem(SettingsItems.Customize)
+        SettingsItem(SettingsItems.Notifications)
     }
 }
