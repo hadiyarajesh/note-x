@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.hadiyarajesh.notex.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -96,7 +97,7 @@ fun SettingsItem(item: SettingsItems) {
             Spacer(modifier = Modifier.width(32.dp))
 
             Divider(
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .height(24.dp)
                     .width(1.dp)
