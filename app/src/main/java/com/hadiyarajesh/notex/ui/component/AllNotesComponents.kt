@@ -2,19 +2,24 @@ package com.hadiyarajesh.notex.ui.component
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hadiyarajesh.notex.database.converter.InstantConverter
+import com.hadiyarajesh.notex.database.entity.Note
+import java.time.Instant
 
 @Composable
-fun NoteCard(modifier: Modifier) {
+fun NoteCard(note: Note) {
     Card(
         elevation = CardDefaults.cardElevation(),
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp)
     ) {
@@ -22,11 +27,13 @@ fun NoteCard(modifier: Modifier) {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.padding(18.dp)
         ) {
-            Text(
-                text = "Hello Compose",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold
-            )
+            note.title?.let {
+                TextSemiBold(
+                    content = it,
+                    null,
+                    MaterialTheme.typography.titleLarge, Color.Black
+                )
+            }
             Row(
                 Modifier
                     .fillMaxWidth()
@@ -38,30 +45,25 @@ fun NoteCard(modifier: Modifier) {
                         .height(IntrinsicSize.Min)
                         .weight(1f)
                 ) {
-                    Text(
-                        text = "Succeed",
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Gray,
-                        modifier = Modifier.padding(end = 16.dp)
+                    TextSemiBold(
+                        content = "Succeed",
+                        Modifier.padding(end = 16.dp)
                     )
                     Divider(
                         color = Color.Gray, modifier = Modifier
                             .fillMaxHeight()
                             .width(1.dp)
                     )
-                    Text(
-                        text = "Goal", fontWeight = FontWeight.SemiBold,
-                        color = Color.Gray, modifier = Modifier.padding(start = 16.dp)
-                    )
+                    TextSemiBold(content = "Goal", Modifier.padding(start = 16.dp))
                 }
                 Row(
                     Modifier
                         .fillMaxWidth()
                         .weight(1f), horizontalArrangement = Arrangement.End
                 ) {
-                    Text(
-                        text = "2020/05/09", fontWeight = FontWeight.SemiBold,
-                        color = Color.Gray
+                    TextSemiBold(
+                        content = InstantConverter.getLocalDate(note.createdOn).toString(),
+                        Modifier.padding(end = 16.dp)
                     )
                 }
 
@@ -74,5 +76,14 @@ fun NoteCard(modifier: Modifier) {
 @Preview
 @Composable
 fun NoteCardPrev() {
-    NoteCard(Modifier.padding(16.dp))
+    NoteCard(
+        Note(
+            noteId = 12345,
+            title = "Note title",
+            content = "Note content",
+            archived = false,
+            createdOn = Instant.now(),
+            updatedOn = Instant.now()
+        )
+    )
 }
