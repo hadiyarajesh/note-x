@@ -20,12 +20,13 @@ fun NoteCard(note: Note) {
     Card(
         elevation = CardDefaults.cardElevation(),
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(18.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             note.title?.let {
                 TextSemiBold(
@@ -46,15 +47,14 @@ fun NoteCard(note: Note) {
                         .weight(1f)
                 ) {
                     TextSemiBold(
-                        content = "Succeed",
-                        Modifier.padding(end = 16.dp)
+                        content = "Succeed", Modifier.padding(end = 8.dp)
                     )
                     Divider(
                         color = Color.Gray, modifier = Modifier
                             .fillMaxHeight()
                             .width(1.dp)
                     )
-                    TextSemiBold(content = "Goal", Modifier.padding(start = 16.dp))
+                    TextSemiBold(content = "Goal", Modifier.padding(start = 8.dp))
                 }
                 Row(
                     Modifier
@@ -62,8 +62,7 @@ fun NoteCard(note: Note) {
                         .weight(1f), horizontalArrangement = Arrangement.End
                 ) {
                     TextSemiBold(
-                        content = InstantConverter.getLocalDate(note.createdOn).toString(),
-                        Modifier.padding(end = 16.dp)
+                        content = InstantConverter.getLocalDate(note.createdOn).toString()
                     )
                 }
 

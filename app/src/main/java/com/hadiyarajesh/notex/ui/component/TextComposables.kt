@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 @Composable
 fun TextSemiBold(
     content: String,
-    modifier: Modifier?,
+    modifier: Modifier? = Modifier,
     textStyle: TextStyle? = null,
     color: Color? = null
 ) {
