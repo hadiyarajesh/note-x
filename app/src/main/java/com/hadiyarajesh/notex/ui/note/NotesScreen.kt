@@ -24,6 +24,7 @@ import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.entity.Note
 import com.hadiyarajesh.notex.ui.component.EmptyView
 import com.hadiyarajesh.notex.ui.component.LoadingProgressBar
+import com.hadiyarajesh.notex.ui.component.NoteCard
 import com.hadiyarajesh.notex.ui.component.RetryItem
 import java.time.Instant
 
@@ -43,7 +44,10 @@ fun NotesScreen(
                 .fillMaxSize()
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = if (notesViewModel.notes == null) {
+                Arrangement.Center
+            } else
+                Arrangement.Top
         ) {
             AllNotesView(
                 notes = notes,
@@ -64,10 +68,7 @@ private fun AllNotesView(
     LazyColumn(modifier = modifier) {
         items(notes) { item ->
             item?.let { note ->
-                NoteItem(
-                    note = note,
-                    onClick = onClick
-                )
+                NoteCard(note = note)
             }
         }
 
