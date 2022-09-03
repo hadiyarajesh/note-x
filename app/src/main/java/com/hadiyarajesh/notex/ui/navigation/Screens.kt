@@ -20,6 +20,12 @@ sealed class Screens(
         selectedIcon = R.drawable.ic_note_filled
     )
 
+    object Folders:Screens(
+        route = "Folders",
+        icon = R.drawable.ic_baseline_folder_open,
+        selectedIcon = R.drawable.ic_baseline_folder
+    )
+
     object Reminders : Screens(
         route = "Reminders",
         icon = R.drawable.ic_task_outlined,
@@ -44,5 +50,6 @@ sealed class Screens(
 
 val bottomNavItems = listOf(
     Screens.Notes,
-    Screens.Reminders
+    Screens.Reminders,
+    Screens.Folders
 )
