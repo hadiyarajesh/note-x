@@ -1,4 +1,4 @@
-package com.hadiyarajesh.notex.ui.note.note_folder
+package com.hadiyarajesh.notex.ui.folders
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

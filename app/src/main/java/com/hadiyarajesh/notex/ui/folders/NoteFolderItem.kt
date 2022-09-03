@@ -1,4 +1,4 @@
-package com.hadiyarajesh.notex.ui.note.note_folder
+package com.hadiyarajesh.notex.ui.folders
 
 import android.graphics.Color
 import com.hadiyarajesh.notex.database.entity.Note
