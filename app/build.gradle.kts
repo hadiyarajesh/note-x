@@ -123,6 +123,9 @@ dependencies {
         because("We need image loading library")
     }
 
+    // For AppWidgets support
+    implementation("androidx.glance:glance-appwidget:1.0.0-alpha04")
+
 //    implementation("io.github.hadiyarajesh:flower:2.0.3") {
 //        because("We need networking and database caching")
 //    }

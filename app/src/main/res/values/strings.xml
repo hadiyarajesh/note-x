@@ -8,4 +8,5 @@
     <string name="welcome_message">Welcome to NoteX</string>
     <string name="retry">Retry</string>
     <string name="empty_message">It\'s all empty here</string>
+    <string name="reminder_widget_description" translatable="false">Get All Reminders on Home Screen</string>
 </resources>
