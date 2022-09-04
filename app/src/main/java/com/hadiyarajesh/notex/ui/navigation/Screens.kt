@@ -28,8 +28,8 @@ sealed class Screens(
 
     object Settings : Screens(
         route = "Settings",
-        icon = R.drawable.ic_task_outlined,
-        selectedIcon = R.drawable.ic_task_filled
+        icon = R.drawable.ic_settings,
+        selectedIcon = R.drawable.ic_settings_selected
     )
 
     fun withArgs(vararg args: Any): String {
@@ -44,5 +44,6 @@ sealed class Screens(
 
 val bottomNavItems = listOf(
     Screens.Notes,
-    Screens.Reminders
+    Screens.Reminders,
+    Screens.Settings
 )

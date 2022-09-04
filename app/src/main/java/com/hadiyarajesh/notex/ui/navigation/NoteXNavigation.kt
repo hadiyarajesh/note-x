@@ -23,6 +23,7 @@ import com.hadiyarajesh.notex.ui.note.NotesViewModel
 import com.hadiyarajesh.notex.ui.note.add.AddNoteScreen
 import com.hadiyarajesh.notex.ui.reminders.RemindersScreen
 import com.hadiyarajesh.notex.ui.reminders.RemindersViewModel
+import com.hadiyarajesh.notex.ui.settings.SettingsScreen
 
 @Composable
 fun NoteXNavigation(
@@ -62,6 +63,8 @@ fun NoteXNavigation(
 
         composable(route = Screens.Settings.route) {
             bottomBarState.value = false
+            
+            SettingsScreen(navController = navController)
         }
     }
 }
