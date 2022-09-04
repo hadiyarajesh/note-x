@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="reminder_card_background">#F9FAFB</color>
+    <color name="reminder_text_color">#221C26</color>
 </resources>
