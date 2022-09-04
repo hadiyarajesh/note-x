@@ -85,6 +85,7 @@ object LibVersion {
     const val retrofitVersion = "2.9.0"
     const val moshiVersion = "1.13.0"
     const val accompanistVersion = "0.25.0"
+    const val workVersion = "2.7.1"
 }
 
 dependencies {
@@ -114,6 +115,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
     implementation("com.squareup.moshi:moshi:${LibVersion.moshiVersion}")
+    implementation("com.squareup.moshi:moshi-adapters:${LibVersion.moshiVersion}")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:${LibVersion.moshiVersion}")
 
     implementation("com.google.accompanist:accompanist-swiperefresh:${LibVersion.accompanistVersion}")
@@ -125,6 +127,9 @@ dependencies {
 
     // For AppWidgets support
     implementation("androidx.glance:glance-appwidget:1.0.0-alpha04")
+
+    //work manager
+    implementation("androidx.work:work-runtime-ktx:${LibVersion.workVersion}")
 
 //    implementation("io.github.hadiyarajesh:flower:2.0.3") {
 //        because("We need networking and database caching")
