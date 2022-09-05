@@ -1,9 +1,9 @@
 package com.hadiyarajesh.notex.widgets.reminder
 
 
-import androidx.compose.material3.MaterialTheme
+import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 import androidx.glance.GlanceModifier
 import androidx.glance.appwidget.CircularProgressIndicator
 import androidx.glance.appwidget.GlanceAppWidget
@@ -19,8 +19,20 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
+import androidx.glance.unit.ColorProvider
+import com.hadiyarajesh.notex.R
+import com.hadiyarajesh.notex.database.entity.Reminder
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class ReminderWidget : GlanceAppWidget() {
+
+    companion object {
+        fun updateWidget(context: Context) {
+            ReminderWidgetWorker.enqueueOnce(context)
+        }
+    }
 
     override val stateDefinition: GlanceStateDefinition<*>
         get() = ReminderDataStateDefinition
@@ -30,18 +42,22 @@ class ReminderWidget : GlanceAppWidget() {
     override fun Content() {
         val reminderData = currentState<ReminderData>()
         Column(
-            modifier = GlanceModifier.appWidgetBackground()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(4.dp)
-                .cornerRadius(4.dp)
+            modifier = GlanceModifier
+                .fillMaxSize()
+                .appWidgetBackground()
+                .background(R.color.widget_background_color)
+                .padding(12.dp)
+                .cornerRadius(24.dp)
         ) {
             Text(
-                text = "Today's Reminders",
+                text = "Reminders",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
+                    fontSize = 18.sp,
+                    color = ColorProvider(R.color.widget_text_color)
                 ),
-                modifier = GlanceModifier.background(MaterialTheme.colorScheme.surface)
+                modifier = GlanceModifier
                     .fillMaxWidth().padding(2.dp)
             )
             Spacer(
@@ -50,17 +66,31 @@ class ReminderWidget : GlanceAppWidget() {
             when (reminderData) {
                 ReminderData.Loading -> {
                     Box(
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
+                        modifier = GlanceModifier.fillMaxWidth()
+                            .fillMaxHeight()
                     ) {
-                        CircularProgressIndicator()
+                        CircularProgressIndicator(
+                        )
                     }
                 }
                 is ReminderData.Available -> {
-                    LazyColumn {
-                        items(reminderData.reminders) { item ->
-                            Text(text = item.content)
-                            Spacer(modifier = GlanceModifier.height(1.dp))
+                    LazyColumn(
+                    ) {
+                        if (reminderData.reminders.isEmpty()) {
+                            item {
+                                Text(
+                                    text = "No reminders",
+                                    modifier = GlanceModifier.fillMaxSize(),
+                                    style = TextStyle(textAlign = TextAlign.Center)
+                                )
+                            }
+                        } else {
+                            items(reminderData.reminders) { item ->
+                                ReminderItem(item)
+                            }
                         }
+
                     }
                 }
 
@@ -75,6 +105,39 @@ class ReminderWidget : GlanceAppWidget() {
         }
 
 
+    }
+
+    @OptIn(ExperimentalUnitApi::class)
+    @Composable
+    private fun ReminderItem(item: Reminder) {
+        Column(
+            modifier = GlanceModifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = GlanceModifier.fillMaxWidth()
+                    .height(48.dp)
+                    .background(R.color.widget_text_color)
+                    .padding(4.dp)
+                    .cornerRadius(12.dp)
+            ) {
+                Text(
+                    modifier = GlanceModifier.fillMaxWidth(),
+                    text = DateTimeFormatter.ofPattern("d MMM yy h:mm a")
+                        .format(LocalDateTime.ofInstant(item.reminderTime, ZoneId.systemDefault())),
+                    style = TextStyle(
+                        color = ColorProvider(R.color.widget_background_color),
+                        fontSize = 12.sp,
+                        textAlign = TextAlign.Right
+                    ),
+                )
+                Text(
+                    text = item.content, style = TextStyle(
+                        color = ColorProvider(R.color.widget_background_color)
+                    )
+                )
+            }
+            Spacer( modifier = GlanceModifier.height(4.dp))
+        }
     }
 
 }

@@ -27,6 +27,9 @@ object ReminderDataStateDefinition : GlanceStateDefinition<ReminderData> {
         return context.dataStoreFile(DATA_STORE_FILENAME)
     }
 
+    /*
+    * ReminderData serializer with Moshi
+    * */
     object ReminderDataSerializer : Serializer<ReminderData> {
         val moshi = Moshi.Builder().add(
             PolymorphicJsonAdapterFactory.of(ReminderData::class.java, "state")

@@ -103,8 +103,10 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.6")
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("androidx.hilt:hilt-work:1.0.0")
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hiltVersion"]}")
     kapt("com.google.dagger:hilt-android-compiler:${rootProject.extra["hiltVersion"]}")
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     implementation("androidx.room:room-ktx:${LibVersion.roomVersion}")
     implementation("androidx.room:room-paging:${LibVersion.roomVersion}")

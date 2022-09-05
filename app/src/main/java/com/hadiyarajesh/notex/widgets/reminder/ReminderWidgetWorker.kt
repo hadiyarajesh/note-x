@@ -5,17 +5,24 @@ import androidx.glance.GlanceId
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
+import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import com.hadiyarajesh.notex.database.entity.Reminder
 import com.hadiyarajesh.notex.database.model.RepetitionStrategy
+import com.hadiyarajesh.notex.repository.reminders.RemindersRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
-import java.time.*
+import java.time.Duration
+import java.time.Instant
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ReminderWidgetWorker(
-    private val context: Context,
-    workerParameters: WorkerParameters
+@HiltWorker
+class ReminderWidgetWorker  @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @Assisted workerParameters: WorkerParameters,
+    private val repository: RemindersRepository
 ) : CoroutineWorker(context, workerParameters) {
 
     companion object {
@@ -45,7 +52,7 @@ class ReminderWidgetWorker(
 
             manager.enqueueUniqueWork(
                 "$uniqueWorkName-u",
-                ExistingWorkPolicy.REPLACE,
+                ExistingWorkPolicy.KEEP,
                 requestBuilder.build()
             )
         }
@@ -53,7 +60,7 @@ class ReminderWidgetWorker(
         private fun getNextDayStart(): Long {
             val calendar = Calendar.getInstance()
             calendar[Calendar.HOUR_OF_DAY] = 0
-            calendar[Calendar.MINUTE] = 0
+            calendar[Calendar.MINUTE] = 1
             calendar[Calendar.SECOND] = 0
             calendar[Calendar.MILLISECOND] = 0
             calendar.add(Calendar.DATE, 1)
@@ -83,23 +90,23 @@ class ReminderWidgetWorker(
         val glanceIds = widgetManager.getGlanceIds(ReminderWidget::class.java)
         //todo: retrieving data to the state
         delay(5000)
-        setWidgetState(
-            glanceIds, ReminderData.Available(
-                listOf(
-                    Reminder(
-                        content = "Reminder 1",
-                        reminderTime = Instant.now(),
-                        repeat = RepetitionStrategy.None,
-                        cancelled = false,
-                        completed = true,
-                        completedOn = Instant.now(),
-                        createdOn = Instant.now(),
-                        updatedOn = Instant.now()
-                    )
-                )
-            )
-        )
-        delay(5000)
+//        setWidgetState(
+//            glanceIds, ReminderData.Available(
+//                listOf(
+//                    Reminder(
+//                        content = "Reminder 1",
+//                        reminderTime = Instant.now(),
+//                        repeat = RepetitionStrategy.None,
+//                        cancelled = false,
+//                        completed = true,
+//                        completedOn = Instant.now(),
+//                        createdOn = Instant.now(),
+//                        updatedOn = Instant.now()
+//                    )
+//                )
+//            )
+//        )
+//        delay(5000)
         setWidgetState(
             glanceIds, ReminderData.Available(
                 listOf(
@@ -122,17 +129,48 @@ class ReminderWidgetWorker(
                         completedOn = Instant.now(),
                         createdOn = Instant.now(),
                         updatedOn = Instant.now()
-                    )
+                    ),
+                    Reminder(
+                        content = "Reminder 3",
+                        reminderTime = Instant.now(),
+                        repeat = RepetitionStrategy.None,
+                        cancelled = false,
+                        completed = true,
+                        completedOn = Instant.now(),
+                        createdOn = Instant.now(),
+                        updatedOn = Instant.now()
+                    ),
+                    Reminder(
+                        content = "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        reminderTime = Instant.now(),
+                        repeat = RepetitionStrategy.None,
+                        cancelled = false,
+                        completed = true,
+                        completedOn = Instant.now(),
+                        createdOn = Instant.now(),
+                        updatedOn = Instant.now()
+                    ),
+                    Reminder(
+                        content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                        reminderTime = Instant.now(),
+                        repeat = RepetitionStrategy.None,
+                        cancelled = false,
+                        completed = true,
+                        completedOn = Instant.now(),
+                        createdOn = Instant.now(),
+                        updatedOn = Instant.now()
+                    ),
                 )
             )
         )
-        delay(5000)
-        setWidgetState(glanceIds, ReminderData.Unavailable("Data unavailable.."))
+        // delay(5000)
+        //setWidgetState(glanceIds, ReminderData.Unavailable("Data unavailable.."))
 
 
     }
 
     private suspend fun setWidgetState(glanceIds: List<GlanceId>, newState: ReminderData) {
+
         glanceIds.forEach { glanceId ->
             updateAppWidgetState(
                 context = context,
@@ -141,6 +179,8 @@ class ReminderWidgetWorker(
                 updateState = { newState }
             )
         }
+
         ReminderWidget().updateAll(context)
+
     }
 }
