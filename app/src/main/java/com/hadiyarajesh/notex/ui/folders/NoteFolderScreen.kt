@@ -82,39 +82,7 @@ fun NoteFolderScreen(
             folderType = NoteFolder,
             createdOn = Instant.now(),
             updatedOn = Instant.now()
-        ),
-        Folder(
-            folderId = 12350,
-            title = "Android5",
-            description = "Android Notes",
-            folderType = NoteFolder,
-            createdOn = Instant.now(),
-            updatedOn = Instant.now()
-        ),
-        Folder(
-            folderId = 12351,
-            title = "Android6",
-            description = "Android Notes",
-            folderType = NoteFolder,
-            createdOn = Instant.now(),
-            updatedOn = Instant.now()
-        ),
-        Folder(
-            folderId = 12352,
-            title = "Android7",
-            description = "Android Notes",
-            folderType = NoteFolder,
-            createdOn = Instant.now(),
-            updatedOn = Instant.now()
-        ),
-        Folder(
-            folderId = 12352,
-            title = "Android8",
-            description = "Android Notes",
-            folderType = NoteFolder,
-            createdOn = Instant.now(),
-            updatedOn = Instant.now()
-        ),
+        )
     )
     val state = rememberLazyGridState()
     Surface {
@@ -194,6 +162,7 @@ fun NoteFolderItemUI(
             modifier = modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Icon(painterResource(id = R.drawable.ic_folder_filled), contentDescription = null)
             Text(
                 text = "Item ${data.title}",
                 style = MaterialTheme.typography.bodyLarge,
@@ -266,13 +235,17 @@ private fun NoteFolderScreenPreview() {
                             modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_folder_filled),
+                                contentDescription = null
+                            )
                             Text(
                                 text = "Item $noteFolderItems",
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "$noteFolderItems notes",
+                                text = "$noteFolderItems item description",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
