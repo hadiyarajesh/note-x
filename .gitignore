@@ -1,15 +1,38 @@
-*.iml
+# Ignore Gradle files
 .gradle
-/local.properties
-/.idea/caches
+build/
+
+# Ignore top level IDEA files
+/.idea/**/*
+!.idea/codeStyles
+!.idea/codeStyles/*
+*.hprof
+
+# configuration
+.iws
+.ipr
+.iml
+local.properties
+
+# Android Studio / IntelliJ IDEA
+*.iws
 /.idea/libraries
-/.idea/modules.xml
+/.idea/tasks.xml
+/.idea/caches
+/.idea/vcs.xml
 /.idea/workspace.xml
+/.idea/modules.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/out/
+
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
-local.properties
+
+/build/
+/projectFilesBackup*
+android_studio_ws
+android_studio_ws/*
