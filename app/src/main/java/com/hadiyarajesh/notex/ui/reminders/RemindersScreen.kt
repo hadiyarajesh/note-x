@@ -46,18 +46,19 @@ fun RemindersScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                modifier = Modifier
-                    .padding(start = 15.dp, top = 10.dp, bottom = 5.dp)
-                    .align(alignment = Alignment.Start),
-                text = stringResource(id = R.string.reminders_text),
-                color = colorResource(id = R.color.reminder_text_color),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+            if (reminders.itemCount > 0) {
+                Text(
+                    modifier = Modifier
+                        .padding(start = 15.dp, top = 10.dp, bottom = 5.dp)
+                        .align(alignment = Alignment.Start),
+                    text = stringResource(id = R.string.reminders_text),
+                    color = colorResource(id = R.color.reminder_text_color),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
 
             AllRemindersView(
                 reminders = reminders,
