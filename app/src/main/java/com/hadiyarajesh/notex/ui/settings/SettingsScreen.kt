@@ -88,22 +88,14 @@ fun SettingsItem(item: SettingsItems) {
         ) {
             Spacer(modifier = Modifier.width(18.dp))
             Icon(
-//                modifier = Modifier.weight(2f),
                 painter = painterResource(item.icon), contentDescription = "itemIcon",
                 modifier = Modifier.size(24.dp)
             )
 
             Spacer(modifier = Modifier.width(32.dp))
 
-            Divider(
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .height(24.dp)
-                    .width(1.dp)
-            )
 
             Text(
-//                modifier = Modifier.weight(1f),
                 text = item.name,
                 textAlign = TextAlign.Center
             )
