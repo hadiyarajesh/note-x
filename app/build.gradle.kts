@@ -98,6 +98,8 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:${LibVersion.navigationComposeVersion}")
     implementation("androidx.datastore:datastore-preferences:${LibVersion.dataStoreVersion}")
     implementation("androidx.paging:paging-compose:1.0.0-alpha16")
+    implementation("androidx.work:work-runtime-ktx:2.5.0")
+    implementation("androidx.compose.material:material:1.0.0-rc01")
     // DO NOT upgrade desugar_jdk_libs to 1.2.0
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.6")
 
