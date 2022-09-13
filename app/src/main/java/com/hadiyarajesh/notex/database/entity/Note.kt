@@ -20,3 +20,4 @@ data class Note(
     val updatedOn: Instant,
     val parentFolderId: Long? = null,
 )
+

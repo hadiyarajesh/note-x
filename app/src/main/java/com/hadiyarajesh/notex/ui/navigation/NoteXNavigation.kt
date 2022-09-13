@@ -23,6 +23,7 @@ import com.hadiyarajesh.notex.ui.folders.FoldersViewModel
 import com.hadiyarajesh.notex.ui.note.NotesScreen
 import com.hadiyarajesh.notex.ui.note.NotesViewModel
 import com.hadiyarajesh.notex.ui.note.add.AddNoteScreen
+import com.hadiyarajesh.notex.ui.note.add.AddNotesViewModel
 import com.hadiyarajesh.notex.ui.reminders.RemindersScreen
 import com.hadiyarajesh.notex.ui.reminders.RemindersViewModel
 
@@ -49,7 +50,8 @@ fun NoteXNavigation(
 
         composable(route = Screens.AddNote.route) {
             bottomBarState.value = false
-            AddNoteScreen(navController = navController)
+            val addNotesViewModel = hiltViewModel<AddNotesViewModel>()
+            AddNoteScreen(navController = navController, addNotesViewModel = addNotesViewModel)
         }
 
         composable(route = Screens.Reminders.route) {
