@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -97,7 +98,7 @@ fun NoteFolderScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "Categories",
+                    text = stringResource(id = R.string.categories),
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = modifier.padding(start = 120.dp)
                 )
@@ -112,6 +113,7 @@ fun NoteFolderScreen(
                 )
 
             }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -120,10 +122,11 @@ fun NoteFolderScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "List Categories",
+                    text = stringResource(id = R.string.list_categories),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
+
             LazyVerticalGrid(
                 modifier = modifier.padding(8.dp),
                 columns = GridCells.Fixed(2),
@@ -137,7 +140,7 @@ fun NoteFolderScreen(
                         it.title
                     }
                 ) { noteItem ->
-                    NoteFolderItemUI(onClick = {}, data = noteItem)
+                    NoteFolderItemUI(onClick = {}, folder = noteItem)
                 }
             }
         }
@@ -148,7 +151,7 @@ fun NoteFolderScreen(
 fun NoteFolderItemUI(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    data: Folder,
+    folder: Folder,
 ) {
     Box(
         modifier = modifier
@@ -163,13 +166,15 @@ fun NoteFolderItemUI(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(painterResource(id = R.drawable.ic_folder_filled), contentDescription = null)
+
             Text(
-                text = "Item ${data.title}",
+                text = "Item ${folder.title}",
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold
             )
+
             Text(
-                text = "${data.description}",
+                text = "${folder.description}",
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -192,18 +197,19 @@ private fun NoteFolderScreenPreview() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Categories",
+                    text = stringResource(id = R.string.categories),
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier.padding(start = 130.dp)
                 )
+
                 Icon(
                     painter = painterResource(id = R.drawable.ic_add_circle_outline),
                     contentDescription = "add_note",
                     modifier = Modifier
                         .padding(end = 10.dp)
                 )
-
             }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -212,10 +218,11 @@ private fun NoteFolderScreenPreview() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "List Categories",
+                    text = stringResource(id = R.string.list_categories),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
+
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -239,11 +246,13 @@ private fun NoteFolderScreenPreview() {
                                 painterResource(id = R.drawable.ic_folder_filled),
                                 contentDescription = null
                             )
+
                             Text(
                                 text = "Item $noteFolderItems",
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Bold
                             )
+
                             Text(
                                 text = "$noteFolderItems item description",
                                 style = MaterialTheme.typography.bodyMedium
