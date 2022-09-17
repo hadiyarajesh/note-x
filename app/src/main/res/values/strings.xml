@@ -8,4 +8,10 @@
     <string name="welcome_message">Welcome to NoteX</string>
     <string name="retry">Retry</string>
     <string name="empty_message">It\'s all empty here</string>
+    <string name="reminder_instance_key" translatable="false">Reminder Instance</string>
+    <string name="reminder_worker_tag" translatable="false">ReminderTag</string>
+    <string name="reminder_id" translatable="false">Reminder_ID</string>
+    <string name="worker_tag" translatable="false">WORKER_TAG</string>
+    <string name="postpone_action" translatable="false">POSTPONE</string>
+    <string name="done_action" translatable="false">DONE</string>
 </resources>
