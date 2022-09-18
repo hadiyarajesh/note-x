@@ -177,30 +177,6 @@ private fun ReminderItem(
                     )
                 }
             }
-
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp)
-                    .align(alignment = Alignment.End)
-            ) {
-                Image(
-                    modifier = Modifier.singleClickable {
-                        // TODO Handle Delete Click
-                    },
-                    painter = painterResource(id = R.drawable.ic_delete),
-                    contentDescription = Constants.EMPTY_STRING
-                )
-
-                Image(
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                        .singleClickable {
-                            // TODO Handle Edit Click
-                        },
-                    painter = painterResource(id = R.drawable.ic_edit),
-                    contentDescription = Constants.EMPTY_STRING
-                )
-            }
         }
     }
 }
