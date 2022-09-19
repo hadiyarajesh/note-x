@@ -14,4 +14,5 @@
     <string name="worker_tag" translatable="false">WORKER_TAG</string>
     <string name="postpone_action" translatable="false">POSTPONE</string>
     <string name="done_action" translatable="false">DONE</string>
+    <string name="notification_id" translatable="false">NOTIFICATION_ID</string>
 </resources>
