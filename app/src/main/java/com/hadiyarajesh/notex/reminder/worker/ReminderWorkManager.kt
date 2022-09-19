@@ -62,17 +62,23 @@ class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
         reminderStrategy: RepetitionStrategy,
         reminderTime: Instant
     ): Long {
-        var duration: Long = 0
-        if (reminderStrategy == RepetitionStrategy.Daily) {
-            duration = Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()
-        } else if (reminderStrategy == RepetitionStrategy.Monthly) {
-            duration = Instant.now().plus(1, ChronoUnit.MONTHS).toEpochMilli()
-        } else if (reminderStrategy == RepetitionStrategy.Yearly) {
-            duration = Instant.now().plus(1, ChronoUnit.YEARS).toEpochMilli()
-        } else if (reminderStrategy == RepetitionStrategy.Weekly) {
-            duration = Instant.now().plus(1, ChronoUnit.WEEKS).toEpochMilli()
-        } else {
-            duration = reminderTime.toEpochMilli()
+        val duration: Long
+        when (reminderStrategy) {
+            RepetitionStrategy.Daily -> {
+                duration = Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()
+            }
+            RepetitionStrategy.Monthly -> {
+                duration = Instant.now().plus(1, ChronoUnit.MONTHS).toEpochMilli()
+            }
+            RepetitionStrategy.Yearly -> {
+                duration = Instant.now().plus(1, ChronoUnit.YEARS).toEpochMilli()
+            }
+            RepetitionStrategy.Weekly -> {
+                duration = Instant.now().plus(1, ChronoUnit.WEEKS).toEpochMilli()
+            }
+            else -> {
+                duration = reminderTime.toEpochMilli()
+            }
         }
         return duration - Instant.now().toEpochMilli()
     }

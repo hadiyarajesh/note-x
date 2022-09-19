@@ -23,30 +23,8 @@ class MainActivity : ComponentActivity() {
         }
 
         createNotificationChannel()
-
-        createNotification()
     }
 
-    private fun createNotification(){
-
-        val fullScreenIntent = Intent(this, MainActivity::class.java)
-        val fullScreenPendingIntent = PendingIntent.getActivity(this, 0,
-            fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val builder = NotificationCompat.Builder(this, getString(R.string.notification_channel_id))
-            .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("My notification")
-            .setContentText("Hello World!")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setFullScreenIntent(fullScreenPendingIntent, true)
-            .addAction(R.drawable.ic_note_filled,"Snooze",fullScreenPendingIntent)
-            .addAction(R.drawable.ic_note_filled,"Snooze",fullScreenPendingIntent)
-
-        with(NotificationManagerCompat.from(this)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(1234, builder.build())
-        }
-    }
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = getString(R.string.notification_channel_id)

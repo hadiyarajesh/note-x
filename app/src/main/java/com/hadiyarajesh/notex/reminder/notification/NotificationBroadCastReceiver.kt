@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.CallSuper
 import androidx.core.app.NotificationManagerCompat
-import androidx.work.Operation
 import com.hadiyarajesh.notex.R
-import com.hadiyarajesh.notex.database.dao.ReminderDao
 import com.hadiyarajesh.notex.reminder.worker.ReminderWorkManager
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Instant
