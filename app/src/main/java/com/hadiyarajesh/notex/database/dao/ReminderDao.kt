@@ -9,7 +9,7 @@ import java.time.Instant
 @Dao
 interface ReminderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdate(reminder: Reminder)
+    suspend fun insertOrUpdate(reminder: Reminder): Long
 
     /**
      * This method will add reminder to folder

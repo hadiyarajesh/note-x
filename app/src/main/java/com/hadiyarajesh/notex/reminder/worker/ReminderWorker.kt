@@ -10,18 +10,18 @@ import com.hadiyarajesh.notex.database.model.RepetitionStrategy
 import com.hadiyarajesh.notex.reminder.notification.NotificationHelper
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import javax.inject.Inject
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 @HiltWorker
 class ReminderWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
+    val reminderDao: ReminderDao,
+    private val notificationHelper: NotificationHelper
 ) : CoroutineWorker(appContext, workerParams) {
 
-    @Inject
-    lateinit var reminderDao: ReminderDao
-
-    private val reminderWorkManager = ReminderWorkManager()
+    private val reminderWorkManager = ReminderWorkManager(reminderDao)
 
     override suspend fun doWork(): Result {
         val reminderId =
@@ -30,9 +30,12 @@ class ReminderWorker @AssistedInject constructor(
             return Result.failure()
         val reminder: Reminder = reminderDao.getById(reminderId)
 
-        NotificationHelper.createNotification(
+        val localDate: LocalDateTime =
+            LocalDateTime.ofInstant(reminder.reminderTime, ZoneOffset.UTC)
+
+        notificationHelper.createNotification(
             applicationContext,
-            text = reminder.reminderTime.toString(),
+            text = "${localDate.hour}:${localDate.minute}",
             title = reminder.content,
             reminderId = reminderId,
             workerTag = inputData.getString(applicationContext.getString(R.string.worker_tag)) ?: ""
