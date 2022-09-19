@@ -59,8 +59,8 @@ class NotificationHelper @Inject constructor() {
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(actionPendingIntent)
-                .addAction(R.drawable.ic_note_filled, "1 hour", postponePendingIntent)
-                .addAction(R.drawable.ic_note_filled, "Done", cancelPendingIntent)
+                .addAction(R.drawable.ic_note_filled, context.getString(R.string.one_hour), postponePendingIntent)
+                .addAction(R.drawable.ic_note_filled, context.getString(R.string.done), cancelPendingIntent)
                 .setAutoCancel(true)
 
 
