@@ -39,7 +39,6 @@ class RemindersRepository @Inject constructor(
             reminder
         )
 
-        println("Reminder ${reminderId} ${reminder.content} ${reminder.reminderTime}")
         val reminderWorkManager = ReminderWorkManager(reminderDao)
         reminderWorkManager.reminderDao = reminderDao
         if(context != null)
