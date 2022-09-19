@@ -15,4 +15,6 @@
     <string name="postpone_action" translatable="false">POSTPONE</string>
     <string name="done_action" translatable="false">DONE</string>
     <string name="notification_id" translatable="false">NOTIFICATION_ID</string>
+    <string name="one_hour" translatable="false">1 hour</string>
+    <string name="done" translatable="false">Done</string>
 </resources>
