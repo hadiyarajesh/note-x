@@ -1,18 +1,23 @@
 package com.hadiyarajesh.notex.ui.reminders
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -23,6 +28,8 @@ import com.hadiyarajesh.notex.database.entity.Reminder
 import com.hadiyarajesh.notex.ui.component.EmptyView
 import com.hadiyarajesh.notex.ui.component.LoadingProgressBar
 import com.hadiyarajesh.notex.ui.component.RetryItem
+import com.hadiyarajesh.notex.utility.Constants
+import com.hadiyarajesh.notex.utility.singleClickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,13 +46,24 @@ fun RemindersScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (reminders.itemCount > 0) {
+                Text(
+                    modifier = Modifier
+                        .padding(start = 15.dp, top = 10.dp, bottom = 5.dp)
+                        .align(alignment = Alignment.Start),
+                    text = stringResource(id = R.string.reminders_text),
+                    color = colorResource(id = R.color.reminder_text_color),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
             AllRemindersView(
                 reminders = reminders,
                 onClick = { reminder ->
-
+                    // TODO Initiate edit reminder flow
                 }
             )
         }
@@ -58,7 +76,10 @@ private fun AllRemindersView(
     reminders: LazyPagingItems<Reminder>,
     onClick: (Reminder) -> Unit,
 ) {
-    LazyColumn(modifier = modifier) {
+    LazyColumn(
+        modifier = modifier.padding(horizontal = 15.dp),
+        verticalArrangement = Arrangement.spacedBy(space = 10.dp)
+    ) {
         items(reminders) { item ->
             item?.let { reminder ->
                 ReminderItem(
@@ -117,11 +138,45 @@ private fun AllRemindersView(
 
 @Composable
 private fun ReminderItem(
-    modifier: Modifier = Modifier,
     reminder: Reminder,
     onClick: (Reminder) -> Unit,
 ) {
-    Column(modifier = modifier) {
-        Text(text = reminder.content ?: "")
+    Card(
+        modifier = Modifier
+            .background(color = colorResource(id = R.color.white))
+            .singleClickable {
+                onClick(reminder)
+            },
+        elevation = CardDefaults.cardElevation(),
+        shape = RoundedCornerShape(size = 16.dp)
+    ) {
+        Column(modifier = Modifier.padding(vertical = 10.dp, horizontal = 12.dp)) {
+            Row {
+                Text(
+                    modifier = Modifier.weight(weight = 1f),
+                    text = reminder.content,
+                    maxLines = 3,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp,
+                    color = colorResource(id = R.color.reminder_text_color)
+                )
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_delete),
+                        contentDescription = Constants.EMPTY_STRING
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(start = 5.dp),
+                        text = "26.08.2022",
+                        color = colorResource(id = R.color.reminder_text_color),
+                        fontSize = 12.sp
+                    )
+                }
+            }
+        }
     }
 }
