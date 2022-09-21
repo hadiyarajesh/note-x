@@ -133,4 +133,10 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${LibVersion.composeVersion}")
     debugImplementation("androidx.compose.ui:ui-tooling:${LibVersion.composeVersion}")
     debugImplementation("androidx.compose.ui:ui-test-manifest:${LibVersion.composeVersion}")
+
+
+    implementation("androidx.work:work-runtime-ktx:2.7.1")
+    implementation("androidx.hilt:hilt-work:1.0.0")
+
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
 }

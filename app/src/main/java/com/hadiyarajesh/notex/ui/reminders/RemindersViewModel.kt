@@ -9,7 +9,6 @@ import com.hadiyarajesh.notex.database.model.RepetitionStrategy
 import com.hadiyarajesh.notex.repository.reminders.RemindersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import java.time.Instant
 import javax.inject.Inject
 
@@ -23,14 +22,20 @@ class RemindersViewModel @Inject constructor(
             .getAllReminders()
             .cachedIn(viewModelScope)
 
-    fun createReminder(
+    suspend fun createReminder(
         title: String,
         reminderTime: Instant,
         repeat: RepetitionStrategy
-    ) = viewModelScope.launch {
-        remindersRepository.createReminder(
+    ): Long {
+
+        val id = remindersRepository.createReminder(
             title, reminderTime, repeat
         )
+        return id
+    }
+
+    fun getreminderbyid(id: Long): Reminder {
+        return remindersRepository.getReminderById(id)
     }
 
 }
