@@ -10,7 +10,7 @@ import java.time.Instant
 @JsonClass(generateAdapter = true)
 data class Reminder(
     @PrimaryKey(autoGenerate = true)
-    val reminderId: Long? =null,
+    val reminderId: Long? = null,
     val content: String,
     val reminderTime: Instant,
     val repeat: RepetitionStrategy,
