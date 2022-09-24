@@ -1,5 +1,6 @@
 package com.hadiyarajesh.notex.di
 
+import com.hadiyarajesh.notex.reminder.notification.NotificationHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,5 +18,11 @@ class ScopeModule {
     @Provides
     fun provideCoroutineScope(): CoroutineScope {
         return CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotificationHelper(): NotificationHelper{
+        return NotificationHelper()
     }
 }

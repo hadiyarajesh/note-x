@@ -8,17 +8,13 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.hadiyarajesh.notex.MainActivity
 import com.hadiyarajesh.notex.R
-import javax.inject.Inject
 import kotlin.random.Random
 
-class NotificationHelper @Inject constructor() {
+class NotificationHelper{
 
     fun createNotification(
         context: Context,
-        title: String,
-        text: String,
-        reminderId: Long,
-        workerTag: String
+        notificationDTO: NotificationDTO
     ) {
         val actionIntent = Intent(context, MainActivity::class.java)
         val actionPendingIntent = PendingIntent.getActivity(
@@ -31,8 +27,8 @@ class NotificationHelper @Inject constructor() {
 
         val postponeIntent = Intent(context, NotificationBroadCastReceiver::class.java).apply {
             action = context.resources.getString(R.string.postpone_action)
-            putExtra(context.resources.getString(R.string.worker_tag), workerTag)
-            putExtra(context.resources.getString(R.string.reminder_id), reminderId)
+            putExtra(context.resources.getString(R.string.worker_tag), notificationDTO.workerTag)
+            putExtra(context.resources.getString(R.string.reminder_id), notificationDTO.reminderId)
             putExtra(context.resources.getString(R.string.notification_id),notificationId)
         }
 
@@ -43,7 +39,7 @@ class NotificationHelper @Inject constructor() {
 
         val cancelIntent = Intent(context, NotificationBroadCastReceiver::class.java).apply {
             action = context.resources.getString(R.string.done_action)
-            putExtra(context.resources.getString(R.string.worker_tag), workerTag)
+            putExtra(context.resources.getString(R.string.worker_tag), notificationDTO.workerTag)
             putExtra(context.resources.getString(R.string.notification_id),notificationId)
         }
 
@@ -55,8 +51,8 @@ class NotificationHelper @Inject constructor() {
         val builder =
             NotificationCompat.Builder(context, context.getString(R.string.notification_channel_id))
                 .setSmallIcon(R.drawable.ic_note_filled)
-                .setContentTitle(title)
-                .setContentText(text)
+                .setContentTitle(notificationDTO.title)
+                .setContentText(notificationDTO.subTitle)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(actionPendingIntent)
                 .addAction(R.drawable.ic_note_filled, context.getString(R.string.one_hour), postponePendingIntent)
