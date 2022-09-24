@@ -7,6 +7,7 @@ import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.dao.ReminderDao
 import com.hadiyarajesh.notex.database.entity.Reminder
 import com.hadiyarajesh.notex.database.model.RepetitionStrategy
+import com.hadiyarajesh.notex.reminder.notification.NotificationDTO
 import com.hadiyarajesh.notex.reminder.notification.NotificationHelper
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -35,16 +36,19 @@ class ReminderWorker @AssistedInject constructor(
 
         notificationHelper.createNotification(
             applicationContext,
-            text = "${localDate.hour}:${localDate.minute}",
-            title = reminder.content,
-            reminderId = reminderId,
-            workerTag = inputData.getString(applicationContext.getString(R.string.worker_tag)) ?: ""
+            NotificationDTO(
+                title = reminder.content,
+                subTitle = "${localDate.hour}:${localDate.minute}",
+                reminderId = reminderId,
+                workerTag = inputData.getString(applicationContext.getString(R.string.worker_tag))
+                    ?: ""
+            )
         )
 
 
         if (reminder.repeat != RepetitionStrategy.None) {
             reminderWorkManager.createWorkRequestAndEnqueue(
-                reminderId= reminderId,
+                reminderId = reminderId,
                 context = applicationContext,
                 isFirstTime = false,
                 time = reminder.reminderTime
