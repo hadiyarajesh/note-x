@@ -20,6 +20,17 @@ interface NoteDao {
         updateFolderModificationProperty(parentFolderId)
     }
 
+    /**
+     * This method will update the provided Note and also modify the updatedOn field of the containing Folder(if the note is in a folder)
+     */
+    @Transaction
+    suspend fun updateNote(note: Note, parentFolderId: Long?) {
+        insertOrUpdate(note)
+        parentFolderId?.let {
+            updateFolderModificationProperty(folderId = parentFolderId, updatedOn = note.updatedOn)
+        }
+    }
+
     @InternalUseOnly
     @Query("UPDATE Note SET parentFolderId = :parentFolderId WHERE noteId = :noteId")
     suspend fun attachNoteToFolder(noteId: Long, parentFolderId: Long)
@@ -29,7 +40,7 @@ interface NoteDao {
     suspend fun updateFolderModificationProperty(folderId: Long, updatedOn: Instant = Instant.now())
 
     @Query("SELECT * FROM Note WHERE noteId = :noteId")
-    fun getById(noteId: Long): Note
+    suspend fun getById(noteId: Long): Note
 
     /**
      * This method wil only return non-deleted notes.
@@ -43,30 +54,33 @@ interface NoteDao {
      * This method wil return ALL notes, including deleted (archived) notes.
      */
     @Query("SELECT * FROM Note ORDER BY noteId DESC")
-    fun getAllByDesc(): PagingSource<Int, Note>
+    suspend fun getAllByDesc(): PagingSource<Int, Note>
 
     /**
      * Mark a note as deleted (archived)
      */
     @Query("UPDATE Note SET archived = 1 WHERE noteId = :noteId")
-    fun markAsArchived(noteId: Long)
+    suspend fun markAsArchived(noteId: Long)
+
+    @Query("UPDATE Note SET archived = 0 WHERE noteId = :noteId")
+    suspend fun markAsUnarchived(noteId: Long)
 
     @Delete
-    fun delete(note: Note)
+    suspend fun delete(note: Note): Int
 
     @Query("DELETE FROM Note WHERE noteId = :noteId")
-    fun deleteById(noteId: Long)
+    suspend fun deleteById(noteId: Long): Int
 
     /**
      * Permanently delete all notes that are already archived.
      */
     @Query("DELETE FROM Note WHERE archived = 1")
-    fun deleteAllArchivedNotes()
+    suspend fun deleteAllArchivedNotes(): Int
 
     /**
      * WARNING: USE WITH CAUTION
      * Permanently delete all notes
      */
     @Query("DELETE FROM Note")
-    fun deleteAll()
+    suspend fun deleteAll(): Int
 }
