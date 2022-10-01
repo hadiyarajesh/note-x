@@ -35,7 +35,7 @@ fun SettingsScreen(
         topBar = {
             SmallTopAppBar(
                 title = {
-                    Text(text = stringResource(R.string.settings))
+                    Text(text = stringResource (R.string.settings))
                 },
                 navigationIcon = {
                     IconButton(onClick = {
