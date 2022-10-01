@@ -1,5 +1,6 @@
 package com.hadiyarajesh.notex.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -16,12 +17,12 @@ import com.hadiyarajesh.notex.database.entity.Note
 import java.time.Instant
 
 @Composable
-fun NoteCard(note: Note) {
+fun NoteCard(note: Note, onClick: (Note) -> Unit) {
     Card(
         elevation = CardDefaults.cardElevation(),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp).clickable { onClick(note)},
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(
@@ -83,6 +84,7 @@ fun NoteCardPrev() {
             archived = false,
             createdOn = Instant.now(),
             updatedOn = Instant.now()
-        )
+        ),
+        onClick = {}
     )
 }
