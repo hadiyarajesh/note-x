@@ -28,8 +28,50 @@ sealed class Screens(
 
     object Settings : Screens(
         route = "Settings",
-        icon = R.drawable.ic_task_outlined,
-        selectedIcon = R.drawable.ic_task_filled
+        icon = R.drawable.ic_settings,
+        selectedIcon = R.drawable.ic_settings_selected
+    )
+
+    object Notifications : Screens(
+        route = "Notifications",
+        icon = R.drawable.ic_notification,
+        selectedIcon = R.drawable.ic_notification
+    )
+
+    object Sounds : Screens(
+        route = "Sounds",
+        icon = R.drawable.ic_sound,
+        selectedIcon = R.drawable.ic_sound
+    )
+
+    object Customize : Screens(
+        route = "Customize",
+        icon = R.drawable.ic_customize,
+        selectedIcon = R.drawable.ic_customize
+    )
+
+    object Language : Screens(
+        route = "Language",
+        icon = R.drawable.ic_language,
+        selectedIcon = R.drawable.ic_language
+    )
+
+    object Widgets : Screens(
+        route = "Widgets",
+        icon = R.drawable.ic_widget,
+        selectedIcon = R.drawable.ic_widget
+    )
+
+    object About : Screens(
+        route = "About",
+        icon = R.drawable.ic_about,
+        selectedIcon = R.drawable.ic_about
+    )
+
+    object Version : Screens(
+        route = "Version",
+        icon = R.drawable.ic_settings,
+        selectedIcon = R.drawable.ic_settings
     )
 
     fun withArgs(vararg args: Any): String {
@@ -44,5 +86,6 @@ sealed class Screens(
 
 val bottomNavItems = listOf(
     Screens.Notes,
-    Screens.Reminders
+    Screens.Reminders,
+    Screens.Settings
 )
