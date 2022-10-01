@@ -26,6 +26,7 @@ import com.hadiyarajesh.notex.ui.component.EmptyView
 import com.hadiyarajesh.notex.ui.component.LoadingProgressBar
 import com.hadiyarajesh.notex.ui.component.NoteCard
 import com.hadiyarajesh.notex.ui.component.RetryItem
+import com.hadiyarajesh.notex.ui.navigation.Screens
 import java.time.Instant
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +53,7 @@ fun NotesScreen(
             AllNotesView(
                 notes = notes,
                 onClick = { note ->
-
+                 navController.navigate(Screens.AddNote.route + "?noteId=${note.noteId}")
                 }
             )
         }
@@ -68,7 +69,7 @@ private fun AllNotesView(
     LazyColumn(modifier = modifier) {
         items(notes) { item ->
             item?.let { note ->
-                NoteCard(note = note)
+                NoteCard(note = note, onClick)
             }
         }
 
