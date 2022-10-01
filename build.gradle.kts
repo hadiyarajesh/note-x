@@ -1,16 +1,70 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 buildscript {
     val hiltVersion by extra("2.42")
 
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0-RC1")
     }
-}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+}
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id("com.android.application") version "7.2.2" apply false
     id("com.android.library") version "7.2.2" apply false
     id("org.jetbrains.kotlin.android") version "1.7.0" apply false
+    id("io.gitlab.arturbosch.detekt") version "1.22.0-RC1"
+//    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+}
+
+allprojects {
+//    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "io.gitlab.arturbosch.detekt")
+    configureDetekt()
+}
+
+configureDetekt()
+fun Project.configureDetekt() {
+    tasks.withType<Detekt> {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        setSource(files(projectDir))
+        parallel = true
+        baseline.set(file(path = "${rootProject.projectDir}/config/detekt/detekt-baseline.xml"))
+        autoCorrect = true
+        reports {
+            xml.required.set(true)
+            html.required.set(false)
+            txt.required.set(false)
+            sarif.required.set(false)
+        }
+    }
 }
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
+
+/*fun Project.configureKtLint() {
+    this.configure<KtlintExtension> {
+        version.set("0.45.2")
+        android.set(true)
+        outputToConsole.set(true)
+        ignoreFailures.set(true)
+        enableExperimentalRules.set(true)
+        disabledRules.set(ktlintDisabledChecks)
+        reporters {
+            reporter(ReporterType.CHECKSTYLE)
+        }
+    }
+}
+
+val ktlintDisabledChecks = setOf(
+    "unused-imports",
+    "final-newline",
+    "max-line-length",
+    "experimental:argument-list-wrapping",
+    "no-wildcard-imports",
+    "experimental:trailing-comma",
+    "experimental:comment-wrapping"
+)*/
