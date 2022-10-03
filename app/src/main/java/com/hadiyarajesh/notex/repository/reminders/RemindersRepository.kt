@@ -7,8 +7,7 @@ import androidx.paging.PagingData
 import com.hadiyarajesh.notex.database.dao.ReminderDao
 import com.hadiyarajesh.notex.database.entity.Reminder
 import com.hadiyarajesh.notex.database.model.RepetitionStrategy
-import com.hadiyarajesh.notex.reminder.worker.ReminderWorkManager
-import com.hadiyarajesh.notex.reminder.worker.ReminderWorker
+import com.hadiyarajesh.notex.reminder.MainNotificationWorker
 import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 import javax.inject.Inject
@@ -16,7 +15,8 @@ import javax.inject.Singleton
 
 @Singleton
 class RemindersRepository @Inject constructor(
-    private val reminderDao: ReminderDao
+    private val reminderDao: ReminderDao,
+    private val reminderWorker: MainNotificationWorker
 ) {
     suspend fun createReminder(
         title: String,
@@ -39,10 +39,11 @@ class RemindersRepository @Inject constructor(
             reminder
         )
 
-        val reminderWorkManager = ReminderWorkManager(reminderDao)
-        reminderWorkManager.reminderDao = reminderDao
-        if(context != null)
-            reminderWorkManager.createWorkRequestAndEnqueue(context, reminderId = reminderId, time = reminderTime)
+        if (context != null)
+            reminderWorker.createWorkRequestAndEnqueue(
+                context,
+                reminder = reminder.copy(reminderId = reminderId)
+            )
     }
 
     fun getAllReminders(): Flow<PagingData<Reminder>> = Pager(
