@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.core.app.NotificationManagerCompat
 import com.hadiyarajesh.notex.R
+import com.hadiyarajesh.notex.reminder.MainNotificationWorker
 import com.hadiyarajesh.notex.reminder.worker.ReminderWorkManager
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Instant
@@ -21,7 +22,7 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
     }
 
     @Inject
-    lateinit var reminderWorkManager: ReminderWorkManager
+    lateinit var reminderWorkManager: MainNotificationWorker
 
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -39,10 +40,9 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
                     intent.getStringExtra(context.resources.getString(R.string.worker_tag)) ?: ""
                 )
 
-                reminderWorkManager.createWorkRequestAndEnqueue(
+                reminderWorkManager.postponeRequestAndEnqueue(
                     context,
                     time = Instant.now().plus(1, ChronoUnit.HOURS),
-                    isFirstTime = false,
                     reminderId = intent.getLongExtra(
                         context.resources.getString(R.string.reminder_id),
                         -1

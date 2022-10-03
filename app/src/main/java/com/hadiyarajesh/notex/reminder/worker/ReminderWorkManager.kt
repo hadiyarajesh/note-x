@@ -7,7 +7,9 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.dao.ReminderDao
+import com.hadiyarajesh.notex.database.entity.Reminder
 import com.hadiyarajesh.notex.database.model.RepetitionStrategy
+import com.hadiyarajesh.notex.reminder.MainNotificationWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,45 +18,66 @@ import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
+class ReminderWorkManager @Inject constructor(val reminderDao: ReminderDao) :
+    MainNotificationWorker {
 
 
-    fun createWorkRequestAndEnqueue(
+    override fun createWorkRequestAndEnqueue(
         context: Context,
-        reminderId: Long,
-        time: Instant,
-        isFirstTime: Boolean = true
+        reminder: Reminder?,
+        requestType: MainNotificationWorker.Companion.RequestType,
+        isFirstTime: Boolean
     ) {
         CoroutineScope(Dispatchers.IO).launch {
-            val data: Data.Builder = Data.Builder()
-            data.putLong(
-                context.resources.getString(R.string.reminder_instance_key),
-                reminderId
-            )
-
-            val workerTag =
-                "${context.resources.getString(R.string.reminder_worker_tag)}${reminderId}"
-
-            data.putString(context.resources.getString(R.string.worker_tag), workerTag)
-
-
-            val reminder = reminderDao.getById(reminderId)
-
-            val initialDelay = if (isFirstTime) time.toEpochMilli() - Instant.now().toEpochMilli()
-            else getDurationInMilli(reminderStrategy = reminder.repeat, reminderTime = time)
-
-            val dailyWorkRequest: WorkRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
-                .setInitialDelay(
-                    initialDelay,
-                    TimeUnit.MILLISECONDS
+            reminder?.let { reminder ->
+                val data: Data.Builder = Data.Builder()
+                data.putLong(
+                    context.resources.getString(R.string.reminder_instance_key),
+                    reminder.reminderId!!
                 )
-                .setInputData(data.build())
-                .addTag(workerTag)
-                .build()
-            WorkManager.getInstance(context)
-                .enqueue(dailyWorkRequest)
+
+                val workerTag =
+                    "${context.resources.getString(R.string.reminder_worker_tag)}${reminder.reminderId}"
+
+                data.putString(context.resources.getString(R.string.worker_tag), workerTag)
+
+                val initialDelay =
+                    if (isFirstTime) reminder.reminderTime.toEpochMilli() - Instant.now()
+                        .toEpochMilli()
+                    else getDurationInMilli(
+                        reminderStrategy = reminder.repeat,
+                        reminderTime = reminder.reminderTime
+                    )
+
+                val dailyWorkRequest: WorkRequest = when (requestType) {
+                    MainNotificationWorker.Companion.RequestType.OneTimeRequest -> OneTimeWorkRequestBuilder<ReminderWorker>()
+                        .setInitialDelay(
+                            initialDelay,
+                            TimeUnit.MILLISECONDS
+                        )
+                        .setInputData(data.build())
+                        .addTag(workerTag)
+                        .build()
+                    MainNotificationWorker.Companion.RequestType.PeriodicRequest -> TODO()
+                }
+                WorkManager.getInstance(context)
+                    .enqueue(dailyWorkRequest)
+            }
         }
 
+    }
+
+    override fun postponeRequestAndEnqueue(context: Context, reminderId: Long, time: Instant) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val reminder = reminderDao.getById(reminderId)
+            createWorkRequestAndEnqueue(context, reminder.copy(reminderTime = time))
+        }
+    }
+
+    override fun cancelWorkRequest(context: Context, tag: String): Boolean {
+        val cancelled = WorkManager.getInstance(context).cancelAllWorkByTag(tag)
+        //doubt needed  review
+        return cancelled.result.isDone
     }
 
 
@@ -83,6 +106,5 @@ class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
         return duration - Instant.now().toEpochMilli()
     }
 
-    fun cancelWorkRequest(context: Context, tag: String) =
-        WorkManager.getInstance(context).cancelAllWorkByTag(tag)
+
 }
