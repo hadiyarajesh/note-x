@@ -7,6 +7,8 @@ import com.hadiyarajesh.notex.database.NoteXDatabase
 import com.hadiyarajesh.notex.database.dao.FolderDao
 import com.hadiyarajesh.notex.database.dao.NoteDao
 import com.hadiyarajesh.notex.database.dao.ReminderDao
+import com.hadiyarajesh.notex.reminder.MainNotificationWorker
+import com.hadiyarajesh.notex.reminder.worker.ReminderWorkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +36,11 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideReminderDao(db: NoteXDatabase): ReminderDao = db.reminderDao
+
+    @Provides
+    @Singleton
+    fun provideMainScheduler(db: ReminderDao): MainNotificationWorker = ReminderWorkManager(db)
+
 
     @Provides
     @Singleton
