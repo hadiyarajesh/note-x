@@ -134,3 +134,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:${LibVersion.composeVersion}")
     debugImplementation("androidx.compose.ui:ui-test-manifest:${LibVersion.composeVersion}")
 }
+
+//afterEvaluate {
+//    // We install the hooks
+//    tasks.getByPath(":app:clean").dependsOn installGitHooks
+//    tasks.getByPath(":app:preBuild").dependsOn installGitHooks
+//}

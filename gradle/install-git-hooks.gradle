@@ -1,0 +1,6 @@
+tasks.register("installGitHooks", Copy) {
+    from file("$rootDir/.githooks")
+    into file("$rootDir/.git/hooks")
+    fileMode = 0775
+}
+tasks.getByPath(":app:preBuild").dependsOn installGitHooks
