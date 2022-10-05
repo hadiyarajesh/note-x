@@ -74,39 +74,20 @@ fun Project.configureKtLint() {
     }
 }
 
-//val deletePreviousGitHOok by tasks.registering(Delete::class) {
-//    group = "utils"
-//    description = "Deleting previous githook"
-//
-////    val preCommit = "${rootProject.rootDir}/.git/hooks/pre-commit"
-//    val prePush = "${rootProject.rootDir}/.git/hooks/pre-push"
-//    if (file(prePush).exists()) {
-//        delete(prePush)
-//    }
-//}
-//
-//val installGitHook by tasks.registering(Copy::class) {
-//    group = "utils"
-//    description = "Adding githook to local working copy, this must be run manually"
-//
-//    dependsOn(deletePreviousGitHOok)
-//    from("${rootProject.rootDir}/.githooks/pre-push")
-//    into("${rootProject.rootDir}/.git/hooks")
-//    fileMode = 0b0111101101
-//}
+// Tasks for providing dir for generated reports from detekt and ktlint
+tasks.withType<GenerateReportsTask> {
+    reportsOutputDirectory.set(
+        File(project.buildDir, "reports/ktlint/merged-ktlint-results.xml")
+    )
+}
 
+// Tasks for automatically installing git-hooks and making it executable also.
 tasks.register("installGitHook", Copy::class) {
     from(file("$rootDir/.githooks"))
     into(file("$rootDir/.git/hooks"))
     fileMode = 0b0111101101 // -rwxr-xr-x
 }
 tasks.getByPath(":app:preBuild").dependsOn(tasks.named("installGitHook"))
-
-tasks.withType<GenerateReportsTask> {
-    reportsOutputDirectory.set(
-        File(project.buildDir, "reports/ktlint/merged-ktlint-results.xml")
-    )
-}
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
