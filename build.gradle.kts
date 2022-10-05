@@ -1,6 +1,7 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask
 
 buildscript {
     val hiltVersion by extra("2.42")
@@ -45,10 +46,6 @@ fun Project.configureDetekt() {
     }
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
-
 fun Project.configureKtLint() {
     this.configure<KtlintExtension> {
         version.set("0.45.2")
@@ -76,3 +73,15 @@ fun Project.configureKtLint() {
         }
     }
 }
+
+tasks.withType<GenerateReportsTask> {
+    reportsOutputDirectory.set(
+        File(project.buildDir, "reports/ktlint/merged-ktlint-results.xml")
+    )
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}
+
+
