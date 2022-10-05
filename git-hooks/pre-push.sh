@@ -3,7 +3,7 @@
 echo "Running static code analysis..."
 
 # Run Detekt, KtLint and Checkstyle static analysis
-./gradlew detekt --daemon
+./gradlew detekt ktlintCheck --daemon
 
 status=$?
 

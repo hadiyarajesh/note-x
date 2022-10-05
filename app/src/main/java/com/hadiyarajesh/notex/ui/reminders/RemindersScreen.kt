@@ -45,7 +45,6 @@ fun RemindersScreen(
             AllRemindersView(
                 reminders = reminders,
                 onClick = { reminder ->
-
                 }
             )
         }
