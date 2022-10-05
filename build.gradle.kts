@@ -74,6 +74,13 @@ fun Project.configureKtLint() {
     }
 }
 
+tasks.register("installGitHook", Copy::class) {
+    from(file("$rootDir/.githooks"))
+    into(file("$rootDir/.git/hooks"))
+    fileMode = 0b0111101101 // -rwxr-xr-x
+}
+tasks.getByPath(":app:preBuild").dependsOn(tasks.named("installGitHook"))
+
 tasks.withType<GenerateReportsTask> {
     reportsOutputDirectory.set(
         File(project.buildDir, "reports/ktlint/merged-ktlint-results.xml")
