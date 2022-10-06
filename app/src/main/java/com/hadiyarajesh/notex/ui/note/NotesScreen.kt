@@ -59,6 +59,7 @@ fun NotesScreen(
     }
 }
 
+@SuppressWarnings("OptionalWhenBraces")
 @Composable
 private fun AllNotesView(
     modifier: Modifier = Modifier,

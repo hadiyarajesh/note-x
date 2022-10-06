@@ -26,12 +26,6 @@ allprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
     configureDetekt()
     configureKtLint()
-//    apply(from = rootProject.file("gradle/install-git-hooks.gradle"))
-}
-
-copy {
-    from("$rootProject.rootDir/scripts/pre-push")
-    into {  file("$rootProject.rootDir/.git/hooks") }
 }
 
 configureDetekt()
@@ -96,26 +90,12 @@ tasks.register("installGitHook", Copy::class) {
 
 tasks.create(name = "gitExecutableHooks") {
     doLast {
-        Runtime.getRuntime().exec("chmod -R +x .git/hooks/");
+        Runtime.getRuntime().exec("chmod -R +x .git/hooks/")
     }
 }
-
 tasks.getByPath("gitExecutableHooks").dependsOn(tasks.named("installGitHook"))
 tasks.getByPath(":app:clean").dependsOn(tasks.named("gitExecutableHooks"))
-//tasks.getByPath(":app:preBuild").dependsOn(tasks.named("installGitHook"))
-
-
-//tasks.register("installLocalGitHook", Copy::class ) {
-//    from(file("$rootProject.rootDir/scripts/pre-push"))
-//    into { file("$rootProject.rootDir/.git/hooks")}
-//    fileMode = 0b0111101101
-//}
-//tasks.getByPath(":app:build").dependsOn(tasks.named("installLocalGitHook"))
-
-
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
-
-
