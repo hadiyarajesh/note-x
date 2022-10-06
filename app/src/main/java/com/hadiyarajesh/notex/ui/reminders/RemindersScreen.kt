@@ -51,6 +51,7 @@ fun RemindersScreen(
     }
 }
 
+@SuppressWarnings("OptionalWhenBraces")
 @Composable
 private fun AllRemindersView(
     modifier: Modifier = Modifier,
