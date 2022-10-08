@@ -16,29 +16,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddNotesViewModel @Inject constructor(private val noteDao: NoteDao) : ViewModel() {
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
-
-    fun saveNote(noteState: NoteState, noteId: Long) {
-        Log.d("color_value", convertIntColorToHex(noteState.color.value))
+    fun saveNote(noteState: NoteState, noteId: Long?) {
         viewModelScope.launch {
-
-            if (noteState.title.value.isNotBlank() && noteState.noteDesc.value.isNotBlank()) {
-                noteDao.insertOrUpdate(
-                    note = Note(
-                        noteId = if (noteId.compareTo(-1) == 0) null else noteId,
-                        title = noteState.title.value,
-                        content = noteState.noteDesc.value,
-                        archived = false,
-                        color = convertIntColorToHex(noteState.color.value),
-                        createdOn = Instant.now(),
-                        updatedOn = Instant.now()
-                    )
+            noteDao.insertOrUpdate(
+                note = Note(
+                    noteId = noteId,
+                    title = noteState.title.value,
+                    content = noteState.noteDesc.value,
+                    archived = false,
+                    color = convertIntColorToHex(noteState.color.value),
+                    createdOn = Instant.now(),
+                    updatedOn = Instant.now()
                 )
-            }
+            )
+
         }
-
-
     }
 
     suspend fun getNote(noteId: Long): Note {

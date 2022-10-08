@@ -62,7 +62,7 @@ fun NoteXNavigation(
             bottomBarState.value = false
             val noteId = it.arguments?.getLong("noteId") ?: -1
             val addNotesViewModel = hiltViewModel<AddNotesViewModel>()
-            AddNoteScreen(navController = navController, addNotesViewModel = addNotesViewModel,noteId)
+            AddNoteScreen(navController = navController, addNotesViewModel = addNotesViewModel, noteId =  if (noteId.compareTo(-1) == 0) null else noteId)
         }
 
         composable(route = Screens.Reminders.route) {
@@ -74,7 +74,6 @@ fun NoteXNavigation(
                 remindersViewModel = remindersViewModel
             )
         }
-
         composable(route = Screens.Settings.route) {
             bottomBarState.value = false
         }
