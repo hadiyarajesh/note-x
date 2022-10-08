@@ -32,7 +32,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddNoteScreen(
-    navController: NavController, addNotesViewModel: AddNotesViewModel, noteId: Long = -1
+    navController: NavController, addNotesViewModel: AddNotesViewModel,
+    noteId: Long?
 ) {
     val state = remember {
         mutableStateOf(NoteState())
@@ -44,8 +45,8 @@ fun AddNoteScreen(
         )
     }
     LaunchedEffect(key1 = true) {
-        if (noteId.compareTo(-1) != 0) {
-            val note = addNotesViewModel.getNote(noteId)
+        noteId?.let { id ->
+            val note = addNotesViewModel.getNote(id)
             state.value.apply {
                 title.value = note.title ?: ""
                 noteDesc.value = note.content ?: ""
@@ -58,12 +59,13 @@ fun AddNoteScreen(
                     durationMillis = 400
                 )
             )
-
         }
     }
 
     BackHandler {
-        addNotesViewModel.saveNote(state.value, noteId)
+        if (checkNoteIsNotEmpty(noteState = state.value)){
+            addNotesViewModel.saveNote(state.value, noteId)
+        }
         navController.navigateUp()
     }
 
@@ -81,7 +83,33 @@ fun AddNoteScreen(
             verticalArrangement = Arrangement.Top,
 
             ) {
-            TopAppBar(navController, addNotesViewModel, state, noteId)
+
+            Row(Modifier.fillMaxWidth()) {
+                IconButton(onClick = {
+                    navController.navigateUp()
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = stringResource(R.string.cd_back)
+                    )
+                }
+                Spacer(Modifier.weight(1f))
+                IconButton(onClick = {
+                    if (checkNoteIsNotEmpty(noteState = state.value)){
+                        addNotesViewModel.saveNote(state.value, noteId)
+                    }
+                    navController.navigateUp()
+
+                }) {
+                    AnimatedVisibility(visible = checkNoteIsNotEmpty(state.value)) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_save_note),
+                            contentDescription = stringResource(R.string.cd_save)
+                        )
+                    }
+                }
+            }
+
             Column(
                 modifier = Modifier.padding(
                     start = 16.dp,
@@ -92,7 +120,7 @@ fun AddNoteScreen(
             ) {
                 BorderLessTextField(
                     text = state.value.title.value,
-                    hint = "Title",
+                    hint = stringResource(id = R.string.hint_note_title),
                     onValueChange = {
                         state.value.title.value = it
                     },
@@ -102,7 +130,7 @@ fun AddNoteScreen(
                 VerticalSpacer(size = 16)
                 BorderLessTextField(
                     text = state.value.noteDesc.value,
-                    hint = "write note here",
+                    hint = stringResource(id = R.string.hint_note_description),
                     onValueChange = {
                         state.value.noteDesc.value = it
                     },
@@ -111,39 +139,6 @@ fun AddNoteScreen(
             }
         }
     }
-}
-
-
-@Composable
-private fun TopAppBar(
-    navController: NavController,
-    addNotesViewModel: AddNotesViewModel,
-    state: MutableState<NoteState>, noteId: Long
-) {
-    Row(Modifier.fillMaxWidth()) {
-        IconButton(onClick = {
-            navController.navigateUp()
-        }) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = stringResource(R.string.cd_back)
-            )
-        }
-        Spacer(Modifier.weight(1f))
-        IconButton(onClick = {
-            addNotesViewModel.saveNote(state.value, noteId = noteId)
-            navController.navigateUp()
-
-        }) {
-            AnimatedVisibility(visible = state.value.title.value.isNotBlank()) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_save_note),
-                    contentDescription = stringResource(R.string.cd_save)
-                )
-            }
-        }
-    }
-
 }
 
 @Composable
@@ -187,4 +182,7 @@ private fun ShowColor(
             )
         }
     }
+}
+fun checkNoteIsNotEmpty(noteState: NoteState) : Boolean {
+    return (noteState.title.value.isNotBlank() && noteState.noteDesc.value.isNotBlank())
 }

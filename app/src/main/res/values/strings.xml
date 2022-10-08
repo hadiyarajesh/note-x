@@ -8,7 +8,12 @@
     <string name="welcome_message">Welcome to NoteX</string>
     <string name="retry">Retry</string>
     <string name="empty_message">It\'s all empty here</string>
+     <!-- cd = content description -->
     <string name="cd_add">Add</string>
     <string name="cd_back">Back</string>
     <string name="cd_save">Save</string>
+
+    <string name="hint_note_title">Title</string>
+    <string name="hint_note_description">write note here</string>
+
 </resources>
