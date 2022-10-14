@@ -18,6 +18,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.hadiyarajesh.notex.ui.folders.FoldersScreen
+import com.hadiyarajesh.notex.ui.folders.FoldersViewModel
 import com.hadiyarajesh.notex.ui.note.NotesScreen
 import com.hadiyarajesh.notex.ui.note.NotesViewModel
 import com.hadiyarajesh.notex.ui.note.add.AddNoteScreen
@@ -58,6 +60,17 @@ fun NoteXNavigation(
                 navController = navController,
                 remindersViewModel = remindersViewModel
             )
+        }
+
+        composable(route = Screens.Folders.route) {
+            bottomBarState.value = true
+            val foldersViewModel = hiltViewModel<FoldersViewModel>()
+
+            FoldersScreen(
+                navController = navController,
+                foldersViewModel = foldersViewModel
+            )
+
         }
 
         composable(route = Screens.Settings.route) {
