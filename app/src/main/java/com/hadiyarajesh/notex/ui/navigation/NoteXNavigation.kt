@@ -23,6 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.hadiyarajesh.notex.ui.folders.FoldersScreen
 import com.hadiyarajesh.notex.ui.folders.FoldersViewModel
 import androidx.navigation.navArgument
+import androidx.navigation.navArgument
 import com.hadiyarajesh.notex.ui.note.NotesScreen
 import com.hadiyarajesh.notex.ui.note.NotesViewModel
 import com.hadiyarajesh.notex.ui.note.add.AddNoteScreen
