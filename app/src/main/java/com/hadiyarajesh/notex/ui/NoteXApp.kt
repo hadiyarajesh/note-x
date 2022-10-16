@@ -23,7 +23,7 @@ fun NoteXApp() {
     NoteXTheme {
         val navController = rememberNavController()
         // A state that maintains visibility of a bottom bar
-        val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
+        val bottomBarState = rememberSaveable { mutableStateOf(true) }
 
         Scaffold(
             bottomBar = {

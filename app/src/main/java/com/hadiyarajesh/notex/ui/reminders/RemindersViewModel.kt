@@ -8,10 +8,10 @@ import com.hadiyarajesh.notex.database.entity.Reminder
 import com.hadiyarajesh.notex.database.model.RepetitionStrategy
 import com.hadiyarajesh.notex.repository.reminders.RemindersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import java.time.Instant
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RemindersViewModel @Inject constructor(
@@ -32,5 +32,4 @@ class RemindersViewModel @Inject constructor(
             title, reminderTime, repeat
         )
     }
-
 }

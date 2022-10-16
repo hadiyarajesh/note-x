@@ -14,7 +14,7 @@ data class Note(
     val content: String?,
     val archived: Boolean,
     val archivedOn: Instant? = null,
-    //HexCode of a color
+    // HexCode of a color
     val color: String? = null,
     val createdOn: Instant,
     val updatedOn: Instant,
