@@ -140,10 +140,8 @@ private fun ReminderItem(
     }
 }
 
-
 @Composable
 fun myContent(): LocalDateTime {
-
     val reminderViewModel = hiltViewModel<RemindersViewModel>()
 
     // Fetching local context
@@ -193,7 +191,6 @@ fun myContent(): LocalDateTime {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         // On button click, TimePicker is
         // displayed, user can select a time
         Button(
@@ -211,7 +208,6 @@ fun myContent(): LocalDateTime {
     }
     return mTimeStore.value
 }
-
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)

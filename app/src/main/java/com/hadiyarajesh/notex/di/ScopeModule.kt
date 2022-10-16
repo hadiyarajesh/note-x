@@ -22,7 +22,7 @@ class ScopeModule {
 
     @Singleton
     @Provides
-    fun provideNotificationHelper(): NotificationHelper{
+    fun provideNotificationHelper(): NotificationHelper {
         return NotificationHelper()
     }
 }

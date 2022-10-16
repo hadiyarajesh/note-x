@@ -23,7 +23,6 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
     @Inject
     lateinit var reminderWorkManager: ReminderWorkManager
 
-
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         when (intent.action) {

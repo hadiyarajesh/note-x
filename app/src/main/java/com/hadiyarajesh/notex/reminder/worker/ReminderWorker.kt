@@ -47,7 +47,6 @@ class ReminderWorker @AssistedInject constructor(
             )
         )
 
-
         if (reminder.repeat != RepetitionStrategy.None) {
             reminderWorkManager.createWorkRequestAndEnqueue(
                 reminderId = reminderId,
@@ -58,5 +57,4 @@ class ReminderWorker @AssistedInject constructor(
         }
         return Result.success()
     }
-
 }

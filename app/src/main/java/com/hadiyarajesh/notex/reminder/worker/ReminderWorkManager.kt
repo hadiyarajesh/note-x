@@ -8,16 +8,15 @@ import androidx.work.WorkRequest
 import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.dao.ReminderDao
 import com.hadiyarajesh.notex.database.model.RepetitionStrategy
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
-
 
     fun createWorkRequestAndEnqueue(
         context: Context,
@@ -33,15 +32,13 @@ class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
             )
 
             val workerTag =
-                "${context.resources.getString(R.string.reminder_worker_tag)}${reminderId}"
+                "${context.resources.getString(R.string.reminder_worker_tag)}$reminderId"
 
             data.putString(context.resources.getString(R.string.worker_tag), workerTag)
 
-
             val reminder = reminderDao.getById(reminderId)
 
-            val initialDelay = if (isFirstTime) {time.toEpochMilli() - Instant.now().toEpochMilli() }
-            else { getDurationInMilli(reminderStrategy = reminder.repeat, reminderTime = time) }
+            val initialDelay = if (isFirstTime) { time.toEpochMilli() - Instant.now().toEpochMilli() } else { getDurationInMilli(reminderStrategy = reminder.repeat, reminderTime = time) }
 
             val dailyWorkRequest: WorkRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
                 .setInitialDelay(
@@ -54,9 +51,7 @@ class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
             WorkManager.getInstance(context)
                 .enqueue(dailyWorkRequest)
         }
-
     }
-
 
     private fun getDurationInMilli(
         reminderStrategy: RepetitionStrategy,

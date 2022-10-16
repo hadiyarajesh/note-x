@@ -135,7 +135,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:${LibVersion.composeVersion}")
     debugImplementation("androidx.compose.ui:ui-test-manifest:${LibVersion.composeVersion}")
 
-
     implementation("androidx.hilt:hilt-work:1.0.0")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 }
