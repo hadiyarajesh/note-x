@@ -148,16 +148,8 @@ fun myContent(): LocalDateTime {
     val mContext = LocalContext.current
 
     // Declaring and initializing a calendar
-    val mCalendar = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        LocalDateTime.now()
-    } else {
-        // TODO("VERSION.SDK_INT < O")
-    }
-    val mHour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        mCalendar.hour
-    } else {
-        // TODO("VERSION.SDK_INT < O")
-    }
+    val mCalendar = LocalDateTime.now()
+    val mHour = mCalendar.hour
     val mMinute = mCalendar.minute
     // Value for storing time as a string
     val mTime = remember { mutableStateOf("") }
