@@ -28,9 +28,7 @@ class NoteFolderViewModel @Inject constructor(
         )
     }
 
-    fun getFolders(
-        folderType: FolderType
-    ): Flow<PagingData<NoteFolder>> {
-        return folderRepository.getAllFolders(folderType).cachedIn(viewModelScope)
+    fun getFolders(): Flow<PagingData<NoteFolder>> {
+        return folderRepository.getAllNoteFolders().cachedIn(viewModelScope)
     }
 }

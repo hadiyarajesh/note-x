@@ -41,7 +41,7 @@ fun NoteFolderScreen(
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val folders = remember { folderViewModel.getFolders(NoteFolder) }.collectAsLazyPagingItems()
+    val folders = remember { folderViewModel.getFolders() }.collectAsLazyPagingItems()
 
     val data = listOf(
         Folder(
