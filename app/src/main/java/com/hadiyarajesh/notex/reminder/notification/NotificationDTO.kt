@@ -5,5 +5,4 @@ data class NotificationDTO(
     val subTitle: String,
     val reminderId: Long,
     val workerTag: String
-) {
-}
+)

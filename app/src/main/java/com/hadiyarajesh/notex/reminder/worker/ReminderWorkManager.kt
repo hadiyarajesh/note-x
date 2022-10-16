@@ -40,8 +40,8 @@ class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
 
             val reminder = reminderDao.getById(reminderId)
 
-            val initialDelay = if (isFirstTime) time.toEpochMilli() - Instant.now().toEpochMilli()
-            else getDurationInMilli(reminderStrategy = reminder.repeat, reminderTime = time)
+            val initialDelay = if (isFirstTime) {time.toEpochMilli() - Instant.now().toEpochMilli() }
+            else { getDurationInMilli(reminderStrategy = reminder.repeat, reminderTime = time) }
 
             val dailyWorkRequest: WorkRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
                 .setInitialDelay(
@@ -64,21 +64,11 @@ class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
     ): Long {
         val duration: Long
         when (reminderStrategy) {
-            RepetitionStrategy.Daily -> {
-                duration = Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()
-            }
-            RepetitionStrategy.Monthly -> {
-                duration = Instant.now().plus(1, ChronoUnit.MONTHS).toEpochMilli()
-            }
-            RepetitionStrategy.Yearly -> {
-                duration = Instant.now().plus(1, ChronoUnit.YEARS).toEpochMilli()
-            }
-            RepetitionStrategy.Weekly -> {
-                duration = Instant.now().plus(1, ChronoUnit.WEEKS).toEpochMilli()
-            }
-            else -> {
-                duration = reminderTime.toEpochMilli()
-            }
+            RepetitionStrategy.Daily -> duration = Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()
+            RepetitionStrategy.Monthly -> duration = Instant.now().plus(1, ChronoUnit.MONTHS).toEpochMilli()
+            RepetitionStrategy.Yearly -> duration = Instant.now().plus(1, ChronoUnit.YEARS).toEpochMilli()
+            RepetitionStrategy.Weekly -> duration = Instant.now().plus(1, ChronoUnit.WEEKS).toEpochMilli()
+            else -> duration = reminderTime.toEpochMilli()
         }
         return duration - Instant.now().toEpochMilli()
     }

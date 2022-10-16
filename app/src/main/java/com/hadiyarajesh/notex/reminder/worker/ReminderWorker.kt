@@ -2,7 +2,8 @@ package com.hadiyarajesh.notex.reminder.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
-import androidx.work.*
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
 import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.dao.ReminderDao
 import com.hadiyarajesh.notex.database.entity.Reminder
@@ -27,8 +28,9 @@ class ReminderWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         val reminderId =
             inputData.getLong(applicationContext.getString(R.string.reminder_instance_key), -1)
-        if (reminderId == -1L)
+        if (reminderId == -1L) {
             return Result.failure()
+        }
         val reminder: Reminder = reminderDao.getById(reminderId)
 
         val localDate: LocalDateTime =

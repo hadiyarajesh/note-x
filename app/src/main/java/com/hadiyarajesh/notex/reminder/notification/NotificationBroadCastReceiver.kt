@@ -27,12 +27,11 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         when (intent.action) {
-            context.resources.getString(R.string.done_action) -> {
+            context.resources.getString(R.string.done_action) ->
                 reminderWorkManager.cancelWorkRequest(
                     context,
                     intent.getStringExtra(context.resources.getString(R.string.worker_tag)) ?: ""
                 )
-            }
             context.resources.getString(R.string.postpone_action) -> {
                 reminderWorkManager.cancelWorkRequest(
                     context,
@@ -49,9 +48,7 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
                     )
                 )
             }
-            else -> {
-                Log.i(TAG, "Nothing to Perform this Action ${intent.action}")
-            }
+            else -> Log.i(TAG, "Nothing to Perform this Action ${intent.action}")
         }
 
         with(NotificationManagerCompat.from(context)) {
@@ -61,6 +58,7 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
 }
 
 abstract class HiltBroadcastReceiver : BroadcastReceiver() {
+    @SuppressWarnings("EmptyFunctionBlock")
     @CallSuper
     override fun onReceive(context: Context, intent: Intent) {
     }

@@ -22,6 +22,7 @@ class NotificationHelper{
             actionIntent, PendingIntent.FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
 
+        @SuppressWarnings("MagicNumber")
         val notificationId = Random(121).nextInt(10000)
 
 

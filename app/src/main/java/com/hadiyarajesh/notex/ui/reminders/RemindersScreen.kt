@@ -5,7 +5,11 @@ import android.app.TimePickerDialog
 import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +37,6 @@ import com.hadiyarajesh.notex.ui.component.RetryItem
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.ZoneOffset
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -150,12 +153,12 @@ fun myContent(): LocalDateTime {
     val mCalendar = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         LocalDateTime.now()
     } else {
-        TODO("VERSION.SDK_INT < O")
+        // TODO("VERSION.SDK_INT < O")
     }
     val mHour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         mCalendar.hour
     } else {
-        TODO("VERSION.SDK_INT < O")
+        // TODO("VERSION.SDK_INT < O")
     }
     val mMinute = mCalendar.minute
     // Value for storing time as a string
