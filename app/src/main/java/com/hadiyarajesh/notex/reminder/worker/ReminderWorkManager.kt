@@ -38,7 +38,11 @@ class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
 
             val reminder = reminderDao.getById(reminderId)
 
-            val initialDelay = if (isFirstTime) { time.toEpochMilli() - Instant.now().toEpochMilli() } else { getDurationInMilli(reminderStrategy = reminder.repeat, reminderTime = time) }
+            val initialDelay = if (isFirstTime) {
+                time.toEpochMilli() - Instant.now().toEpochMilli()
+            } else {
+                getDurationInMilli(reminderStrategy = reminder.repeat, reminderTime = time)
+            }
 
             val dailyWorkRequest: WorkRequest = OneTimeWorkRequestBuilder<ReminderWorker>()
                 .setInitialDelay(
