@@ -15,12 +15,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
+import com.hadiyarajesh.notex.ui.folders.NoteFolderScreen
+import com.hadiyarajesh.notex.ui.folders.NoteFolderViewModel
 import com.hadiyarajesh.notex.ui.note.NotesScreen
 import com.hadiyarajesh.notex.ui.note.NotesViewModel
 import com.hadiyarajesh.notex.ui.note.add.AddNoteScreen
+import com.hadiyarajesh.notex.ui.note.add.AddNotesViewModel
 import com.hadiyarajesh.notex.ui.reminders.RemindersScreen
 import com.hadiyarajesh.notex.ui.reminders.RemindersViewModel
 
@@ -45,9 +50,19 @@ fun NoteXNavigation(
             )
         }
 
-        composable(route = Screens.AddNote.route) {
+        composable(route = Screens.AddNote.route + "?noteId={noteId}",                             arguments = listOf(
+            navArgument(
+                name = "noteId"
+            ) {
+                type = NavType.LongType
+                defaultValue = -1
+            }
+        )
+        ) {
             bottomBarState.value = false
-            AddNoteScreen(navController = navController)
+            val noteId = it.arguments?.getLong("noteId") ?: -1
+            val addNotesViewModel = hiltViewModel<AddNotesViewModel>()
+            AddNoteScreen(navController = navController, addNotesViewModel = addNotesViewModel, noteId =  if (noteId.compareTo(-1) == 0) null else noteId)
         }
 
         composable(route = Screens.Reminders.route) {
@@ -57,6 +72,16 @@ fun NoteXNavigation(
             RemindersScreen(
                 navController = navController,
                 remindersViewModel = remindersViewModel
+            )
+        }
+
+        composable(route = Screens.Folders.route) {
+            bottomBarState.value = true
+            val noteFolderViewModel = hiltViewModel<NoteFolderViewModel>()
+
+            NoteFolderScreen(
+                navController = navController,
+                folderViewModel = noteFolderViewModel
             )
         }
 

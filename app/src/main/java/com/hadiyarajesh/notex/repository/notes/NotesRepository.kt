@@ -35,4 +35,36 @@ class NotesRepository @Inject constructor(
     ) {
         noteDao.getAllUnArchivedByDesc()
     }.flow
+
+    suspend fun getNote(noteId: Long): Note = noteDao.getById(noteId)
+
+    /**
+     * Inserts the provided Note into the database.
+     */
+    suspend fun addNote(note: Note) = noteDao.insertOrUpdate(note)
+
+    /**
+     * Updates the provided Note in the database.
+     */
+    suspend fun updateNote(note: Note,parentFolderId: Long?) = noteDao.updateNote(note, parentFolderId)
+
+
+
+    suspend fun deleteNote(note: Note): Int = noteDao.delete(note)
+
+    suspend fun deleteNote(noteId: Long): Int = noteDao.deleteById(noteId)
+
+    suspend fun deleteArchived(): Int = noteDao.deleteAllArchivedNotes()
+
+    suspend fun deleteAllNotes(): Int = noteDao.deleteAll()
+
+
+
+    suspend fun archive(noteId: Long) = noteDao.markAsArchived(noteId)
+
+    suspend fun unarchive(noteId: Long) = noteDao.markAsUnarchived(noteId)
+
+
+
+    suspend fun addToFolder(noteId: Long, folderId: Long) = noteDao.addToFolder(noteId,folderId)
 }

@@ -3,4 +3,6 @@
     <string name="welcome_message">NoteX में आपका स्वागत है</string>
     <string name="retry">फिर से प्रयास करें</string>
     <string name="empty_message">यहाँ सब खाली है</string>
+    <string name="categories">श्रेणियाँ</string>
+    <string name="list_categories">सूची श्रेणियाँ</string>
 </resources>

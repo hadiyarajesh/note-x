@@ -67,6 +67,7 @@ fun NoteCard(note: Note) {
                         content = InstantConverter.getLocalDate(note.createdOn).toString()
                     )
                 }
+
             }
         }
     }
