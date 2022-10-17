@@ -8,11 +8,11 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import java.io.IOException
-import javax.inject.Inject
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = "${Constants.App.APP_NAME.lowercase()}_prefs"
@@ -34,7 +34,6 @@ class PreferenceManager @Inject constructor(@ApplicationContext val context: Con
         .map { preferences ->
             preferences[APP_LANGUAGE_KEY]
         }
-
 
     suspend fun saveAppLanguage(language: String) {
         context.dataStore.edit { preferences ->

@@ -30,12 +30,6 @@ val Typography = Typography(
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
     )
-    */, headlineMedium = TextStyle(
-        letterSpacing = 1.sp,
-        fontWeight = FontWeight.Medium,
-        fontSize = 24.sp,
-        lineHeight = 24.sp,
-    ),
 
     headlineSmall = TextStyle(
         letterSpacing = 1.sp,
@@ -44,4 +38,4 @@ val Typography = Typography(
         lineHeight = 24.sp,
     )
 )
-
+)

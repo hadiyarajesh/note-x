@@ -16,7 +16,6 @@ object InstantConverter {
     @TypeConverter
     fun toInstant(value: String?): Instant? = value?.let { Instant.parse(value) }
 
-
     @JvmStatic
     @TypeConverter
     fun getLocalDate(instant: Instant): LocalDate {

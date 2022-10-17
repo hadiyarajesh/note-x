@@ -84,7 +84,6 @@ fun LoadingProgressBar(
     color: Color = MaterialTheme.colorScheme.primary,
     strokeWidth: Dp = 4.dp
 ) {
-
     Box(modifier = modifier) {
         CircularProgressIndicator(
             modifier = Modifier

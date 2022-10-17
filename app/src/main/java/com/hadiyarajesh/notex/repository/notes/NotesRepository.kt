@@ -5,10 +5,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hadiyarajesh.notex.database.dao.NoteDao
 import com.hadiyarajesh.notex.database.entity.Note
-import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
 
 @Singleton
 class NotesRepository @Inject constructor(
