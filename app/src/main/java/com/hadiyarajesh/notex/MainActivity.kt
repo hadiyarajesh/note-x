@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.hadiyarajesh.notex.ui.NoteXApp
+import com.hadiyarajesh.notex.ui.reminders.myContent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NoteXApp()
+            myContent()
         }
 
         createNotificationChannel()

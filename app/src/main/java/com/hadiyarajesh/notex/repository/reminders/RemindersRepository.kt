@@ -1,15 +1,17 @@
 package com.hadiyarajesh.notex.repository.reminders
 
+import android.content.Context
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hadiyarajesh.notex.database.dao.ReminderDao
 import com.hadiyarajesh.notex.database.entity.Reminder
 import com.hadiyarajesh.notex.database.model.RepetitionStrategy
-import kotlinx.coroutines.flow.Flow
+import com.hadiyarajesh.notex.reminder.worker.ReminderWorkManager
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
 
 @Singleton
 class RemindersRepository @Inject constructor(
@@ -18,20 +20,33 @@ class RemindersRepository @Inject constructor(
     suspend fun createReminder(
         title: String,
         reminderTime: Instant,
-        repeat: RepetitionStrategy
+        repeat: RepetitionStrategy,
+        context: Context? = null
     ) {
-        reminderDao.insertOrUpdate(
-            Reminder(
-                content = title,
-                reminderTime = reminderTime,
-                repeat = repeat,
-                cancelled = false,
-                completed = false,
-                completedOn = null,
-                createdOn = Instant.now(),
-                updatedOn = Instant.now(),
-            )
+        val reminder = Reminder(
+            content = title,
+            reminderTime = reminderTime,
+            repeat = repeat,
+            cancelled = false,
+            completed = false,
+            completedOn = null,
+            createdOn = Instant.now(),
+            updatedOn = Instant.now(),
         )
+
+        val reminderId = reminderDao.insertOrUpdate(
+            reminder
+        )
+
+        val reminderWorkManager = ReminderWorkManager(reminderDao)
+        reminderWorkManager.reminderDao = reminderDao
+        if (context != null) {
+            reminderWorkManager.createWorkRequestAndEnqueue(
+                context,
+                reminderId = reminderId,
+                time = reminderTime
+            )
+        }
     }
 
     fun getAllReminders(): Flow<PagingData<Reminder>> = Pager(

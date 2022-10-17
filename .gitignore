@@ -16,6 +16,7 @@ local.properties
 
 # Android Studio / IntelliJ IDEA
 *.iws
+/.idea
 /.idea/libraries
 /.idea/tasks.xml
 /.idea/caches
@@ -24,6 +25,7 @@ local.properties
 /.idea/modules.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/.idea/misc.xml
 /out/
 
 .DS_Store

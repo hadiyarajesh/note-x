@@ -46,19 +46,20 @@ fun NotesScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = if (notesViewModel.notes == null) {
                 Arrangement.Center
-            } else
+            } else {
                 Arrangement.Top
+            }
         ) {
             AllNotesView(
                 notes = notes,
                 onClick = { note ->
-
                 }
             )
         }
     }
 }
 
+@SuppressWarnings("OptionalWhenBraces")
 @Composable
 private fun AllNotesView(
     modifier: Modifier = Modifier,

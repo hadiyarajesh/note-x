@@ -1,5 +1,6 @@
 package com.hadiyarajesh.notex.ui.reminders
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -8,10 +9,10 @@ import com.hadiyarajesh.notex.database.entity.Reminder
 import com.hadiyarajesh.notex.database.model.RepetitionStrategy
 import com.hadiyarajesh.notex.repository.reminders.RemindersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import java.time.Instant
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RemindersViewModel @Inject constructor(
@@ -26,11 +27,11 @@ class RemindersViewModel @Inject constructor(
     fun createReminder(
         title: String,
         reminderTime: Instant,
-        repeat: RepetitionStrategy
+        repeat: RepetitionStrategy,
+        context: Context?
     ) = viewModelScope.launch {
         remindersRepository.createReminder(
-            title, reminderTime, repeat
+            title, reminderTime, repeat, context
         )
     }
-
 }

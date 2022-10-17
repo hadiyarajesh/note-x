@@ -28,6 +28,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+        </provider>
+
+        <receiver android:name=".reminder.notification.NotificationBroadCastReceiver"/>
     </application>
 
 </manifest>

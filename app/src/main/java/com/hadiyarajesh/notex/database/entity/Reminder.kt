@@ -18,7 +18,7 @@ data class Reminder(
     val cancelledOn: Instant? = null,
     val completed: Boolean,
     val completedOn: Instant?,
-    //HexCode of a color
+    // HexCode of a color
     val color: String? = null,
     val createdOn: Instant,
     val updatedOn: Instant,
