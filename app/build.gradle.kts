@@ -105,6 +105,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hiltVersion"]}")
     kapt("com.google.dagger:hilt-android-compiler:${rootProject.extra["hiltVersion"]}")
 
+    implementation("androidx.room:room-runtime:${LibVersion.roomVersion}")
     implementation("androidx.room:room-ktx:${LibVersion.roomVersion}")
     implementation("androidx.room:room-paging:${LibVersion.roomVersion}")
     kapt("androidx.room:room-compiler:${LibVersion.roomVersion}")

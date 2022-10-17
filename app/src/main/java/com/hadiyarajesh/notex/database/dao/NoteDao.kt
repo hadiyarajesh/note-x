@@ -1,7 +1,12 @@
 package com.hadiyarajesh.notex.database.dao
 
 import androidx.paging.PagingSource
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
 import com.hadiyarajesh.notex.database.entity.Note
 import com.hadiyarajesh.notex.utility.InternalUseOnly
 import java.time.Instant
@@ -54,7 +59,7 @@ interface NoteDao {
      * This method wil return ALL notes, including deleted (archived) notes.
      */
     @Query("SELECT * FROM Note ORDER BY noteId DESC")
-    suspend fun getAllByDesc(): PagingSource<Int, Note>
+    fun getAllByDesc(): PagingSource<Int, Note>
 
     /**
      * Mark a note as deleted (archived)

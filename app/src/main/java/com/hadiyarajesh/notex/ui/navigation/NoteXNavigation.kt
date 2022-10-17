@@ -1,6 +1,5 @@
 package com.hadiyarajesh.notex.ui.navigation
 
-import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.BottomAppBar
@@ -20,17 +19,15 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.hadiyarajesh.notex.ui.folders.FoldersScreen
-import com.hadiyarajesh.notex.ui.folders.FoldersViewModel
 import androidx.navigation.navArgument
-import androidx.navigation.navArgument
+import com.hadiyarajesh.notex.ui.folders.NoteFolderScreen
+import com.hadiyarajesh.notex.ui.folders.NoteFolderViewModel
 import com.hadiyarajesh.notex.ui.note.NotesScreen
 import com.hadiyarajesh.notex.ui.note.NotesViewModel
 import com.hadiyarajesh.notex.ui.note.add.AddNoteScreen
 import com.hadiyarajesh.notex.ui.note.add.AddNotesViewModel
 import com.hadiyarajesh.notex.ui.reminders.RemindersScreen
 import com.hadiyarajesh.notex.ui.reminders.RemindersViewModel
-import com.hadiyarajesh.notex.utility.TAG
 
 @Composable
 fun NoteXNavigation(
@@ -80,13 +77,12 @@ fun NoteXNavigation(
 
         composable(route = Screens.Folders.route) {
             bottomBarState.value = true
-            val foldersViewModel = hiltViewModel<FoldersViewModel>()
+            val noteFolderViewModel = hiltViewModel<NoteFolderViewModel>()
 
-            FoldersScreen(
+            NoteFolderScreen(
                 navController = navController,
-                foldersViewModel = foldersViewModel
+                folderViewModel = noteFolderViewModel
             )
-
         }
 
         composable(route = Screens.Settings.route) {
