@@ -38,6 +38,12 @@ sealed class Screens(
         selectedIcon = R.drawable.ic_task_filled
     )
 
+    object NoteFolder : Screens(
+        route = "Folders",
+        icon = R.drawable.ic_task_outlined,
+        selectedIcon = R.drawable.ic_task_filled
+    )
+
     fun withArgs(vararg args: Any): String {
         return buildString {
             append(route)

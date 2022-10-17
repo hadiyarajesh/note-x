@@ -8,6 +8,9 @@
     <string name="welcome_message">Welcome to NoteX</string>
     <string name="retry">Retry</string>
     <string name="empty_message">It\'s all empty here</string>
+    <string name="categories">Categories</string>
+    <string name="list_categories">List Categories</string>
+
      <!-- cd = content description -->
     <string name="cd_add">Add</string>
     <string name="cd_back">Back</string>
