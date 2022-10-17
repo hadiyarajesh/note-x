@@ -50,7 +50,6 @@ fun NoteCard(note: Note) {
                         content = "Succeed", Modifier.padding(end = 8.dp)
                     )
                     Divider(
-                        color = Color.Gray, modifier = Modifier
                         color = Color.Gray,
                         modifier = Modifier
                             .fillMaxHeight()
