@@ -14,7 +14,7 @@ data class Folder(
     val title: String,
     val description: String?,
     val folderType: FolderType,
-    //HexCode of a color
+    // HexCode of a color
     val color: String? = null,
     val createdOn: Instant,
     val updatedOn: Instant

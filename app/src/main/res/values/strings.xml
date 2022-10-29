@@ -8,4 +8,24 @@
     <string name="welcome_message">Welcome to NoteX</string>
     <string name="retry">Retry</string>
     <string name="empty_message">It\'s all empty here</string>
+    <string name="categories">Categories</string>
+    <string name="list_categories">List Categories</string>
+
+     <!-- cd = content description -->
+    <string name="cd_add">Add</string>
+    <string name="cd_back">Back</string>
+    <string name="cd_save">Save</string>
+
+    <string name="hint_note_title">Title</string>
+    <string name="hint_note_description">Start typing…</string>
+
+    <string name="reminder_instance_key" translatable="false">Reminder Instance</string>
+    <string name="reminder_worker_tag" translatable="false">ReminderTag</string>
+    <string name="reminder_id" translatable="false">Reminder_ID</string>
+    <string name="worker_tag" translatable="false">WORKER_TAG</string>
+    <string name="postpone_action" translatable="false">POSTPONE</string>
+    <string name="done_action" translatable="false">DONE</string>
+    <string name="notification_id" translatable="false">NOTIFICATION_ID</string>
+    <string name="one_hour" translatable="false">1 hour</string>
+    <string name="done" translatable="false">Done</string>
 </resources>

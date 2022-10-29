@@ -1,11 +1,13 @@
-package com.hadiyarajesh.notex.ui.note
+package com.hadiyarajesh.notex.ui.note.all
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -13,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.paging.LoadState
@@ -24,8 +25,9 @@ import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.entity.Note
 import com.hadiyarajesh.notex.ui.component.EmptyView
 import com.hadiyarajesh.notex.ui.component.LoadingProgressBar
+import com.hadiyarajesh.notex.ui.component.NoteCard
 import com.hadiyarajesh.notex.ui.component.RetryItem
-import java.time.Instant
+import com.hadiyarajesh.notex.ui.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,24 +39,34 @@ fun NotesScreen(
     val context = LocalContext.current
     val notes = remember { notesViewModel.notes }.collectAsLazyPagingItems()
 
-    Scaffold { innerPadding ->
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(Screens.AddNote.route)
+                }
+            ) {
+                Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
+            }
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
         ) {
             AllNotesView(
                 notes = notes,
                 onClick = { note ->
-
+                    navController.navigate(Screens.AddNote.route + "?noteId=${note.noteId}")
                 }
             )
         }
     }
 }
 
+@SuppressWarnings("OptionalWhenBraces")
 @Composable
 private fun AllNotesView(
     modifier: Modifier = Modifier,
@@ -64,10 +76,7 @@ private fun AllNotesView(
     LazyColumn(modifier = modifier) {
         items(notes) { item ->
             item?.let { note ->
-                NoteItem(
-                    note = note,
-                    onClick = onClick
-                )
+                NoteCard(note = note, onClick = onClick)
             }
         }
 
@@ -76,6 +85,7 @@ private fun AllNotesView(
                 loadState.refresh is LoadState.Loading -> {
                     item { LoadingProgressBar(modifier = Modifier.fillParentMaxSize()) }
                 }
+
                 loadState.append is LoadState.Loading -> {
                     item {
                         LoadingProgressBar(
@@ -105,6 +115,7 @@ private fun AllNotesView(
                         )
                     }
                 }
+
                 loadState.append is LoadState.Error -> {
                     item {
                         RetryItem(
@@ -115,34 +126,5 @@ private fun AllNotesView(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun NoteItem(
-    modifier: Modifier = Modifier,
-    note: Note,
-    onClick: (Note) -> Unit,
-) {
-    Column(modifier = modifier) {
-        Text(text = note.title ?: "")
-    }
-}
-
-@Preview
-@Composable
-fun NoteItemPreview() {
-    Surface {
-        NoteItem(
-            note = Note(
-                noteId = 12345,
-                title = "NOte title",
-                content = "Note content",
-                archived = false,
-                createdOn = Instant.now(),
-                updatedOn = Instant.now()
-            ),
-            onClick = {}
-        )
     }
 }
