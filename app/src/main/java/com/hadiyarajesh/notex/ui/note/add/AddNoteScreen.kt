@@ -35,21 +35,17 @@ fun AddNoteScreen(
     navController: NavController, addNotesViewModel: AddNotesViewModel,
     noteId: Long?
 ) {
-    val state = remember {
-        mutableStateOf(NoteState())
-    }
+    val state = remember { mutableStateOf(NoteState()) }
 
-    val noteBackground = remember {
-        Animatable(
-            Color(state.value.color.value)
-        )
-    }
-    LaunchedEffect(key1 = true) {
+    val noteBackground = remember { Animatable(Color(state.value.color.value)) }
+
+    LaunchedEffect(Unit) {
         noteId?.let { id ->
             val note = addNotesViewModel.getNote(id)
+
             state.value.apply {
-                title.value = note.title ?: ""
-                noteDesc.value = note.content ?: ""
+                title.value = note.title
+                noteDesc.value = note.content
                 color.value = Color(android.graphics.Color.parseColor(note.color)).toArgb()
             }
 
@@ -63,53 +59,42 @@ fun AddNoteScreen(
     }
 
     BackHandler {
-        if (checkNoteIsNotEmpty(noteState = state.value)){
+        if (checkNoteIsNotEmpty(noteState = state.value)) {
             addNotesViewModel.saveNote(state.value, noteId)
         }
         navController.navigateUp()
     }
 
-    Scaffold(bottomBar = {
-        BottomAppBar(containerColor = noteBackground.value, modifier = Modifier.height(40.dp)) {
-            ShowColor(state = state, noteBackground)
-        }
-    }) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(noteBackground.value)
-                .padding(innerPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
-
-            ) {
-
-            Row(Modifier.fillMaxWidth()) {
-                IconButton(onClick = {
-                    navController.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(R.string.cd_back)
-                    )
-                }
-                Spacer(Modifier.weight(1f))
-                IconButton(onClick = {
-                    if (checkNoteIsNotEmpty(noteState = state.value)){
+    Scaffold(
+        topBar = {
+            AddNoteTopBar(
+                onBackClick = { navController.navigateUp() },
+                onDoneClick = {
+                    if (checkNoteIsNotEmpty(noteState = state.value)) {
                         addNotesViewModel.saveNote(state.value, noteId)
                     }
                     navController.navigateUp()
-
-                }) {
-                    AnimatedVisibility(visible = checkNoteIsNotEmpty(state.value)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_save_note),
-                            contentDescription = stringResource(R.string.cd_save)
-                        )
-                    }
-                }
-            }
-
+                },
+                showDoneButton = checkNoteIsNotEmpty(state.value)
+            )
+        },
+//        bottomBar = {
+//            BottomAppBar(
+//                modifier = Modifier.height(40.dp),
+//                containerColor = noteBackground.value,
+//            ) {
+//                ShowColor(state = state, noteBackground)
+//            }
+//        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+//                .background(noteBackground.value)
+                .padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
             Column(
                 modifier = Modifier.padding(
                     start = 16.dp,
@@ -119,26 +104,62 @@ fun AddNoteScreen(
                 )
             ) {
                 BorderLessTextField(
-                    text = state.value.title.value,
+//                    text = state.value.title.value ?: stringResource(id = R.string.hint_note_title),
+                    text = state.value.title.value ?: "",
                     hint = stringResource(id = R.string.hint_note_title),
                     onValueChange = {
                         state.value.title.value = it
                     },
                     maxLines = 1,
-                    textStyle = MaterialTheme.typography.headlineMedium
+                    textStyle = MaterialTheme.typography.headlineMedium.copy(color = MaterialTheme.colorScheme.onBackground)
                 )
                 VerticalSpacer(size = 16)
+
                 BorderLessTextField(
-                    text = state.value.noteDesc.value,
+//                    text = state.value.noteDesc.value
+//                        ?: stringResource(id = R.string.hint_note_description),
+                    text = state.value.noteDesc.value ?: "",
                     hint = stringResource(id = R.string.hint_note_description),
                     onValueChange = {
                         state.value.noteDesc.value = it
                     },
-                    textStyle = MaterialTheme.typography.headlineSmall
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onBackground)
                 )
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddNoteTopBar(
+    onBackClick: () -> Unit,
+    onDoneClick: () -> Unit,
+    showDoneButton: Boolean
+) {
+    SmallTopAppBar(
+        title = { },
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = stringResource(R.string.cd_back)
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = onDoneClick) {
+                AnimatedVisibility(
+                    visible = showDoneButton
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_save_note),
+                        contentDescription = stringResource(R.string.cd_save)
+                    )
+                }
+            }
+        }
+    )
 }
 
 @Composable
@@ -147,9 +168,9 @@ private fun ShowColor(
     noteBackground: Animatable<Color, AnimationVector4D>
 ) {
     val scope = rememberCoroutineScope()
+
     Row(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         noteColors.forEach { color ->
@@ -177,12 +198,19 @@ private fun ShowColor(
                             )
                         }
                         state.value.color.value = colorInt
-
                     }
             )
         }
     }
 }
-fun checkNoteIsNotEmpty(noteState: NoteState) : Boolean {
-    return (noteState.title.value.isNotBlank() && noteState.noteDesc.value.isNotBlank())
+
+//fun checkNoteIsNotEmpty(noteState: NoteState): Boolean {
+//    return (noteState.title.value.isNotBlank() || noteState.noteDesc.value.isNotBlank())
+//}
+
+//fun checkNoteIsNotEmpty(noteState: NoteState): Boolean {
+//    return !(noteState.title.value.isNullOrBlank() || noteState.noteDesc.value.isNullOrBlank())
+//}
+fun checkNoteIsNotEmpty(noteState: NoteState): Boolean {
+    return !noteState.noteDesc.value.isNullOrBlank()
 }

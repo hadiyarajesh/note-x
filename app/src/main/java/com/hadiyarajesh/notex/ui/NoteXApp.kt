@@ -10,10 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hadiyarajesh.notex.ui.navigation.MainBottomBar
 import com.hadiyarajesh.notex.ui.navigation.NoteXNavigation
-import com.hadiyarajesh.notex.ui.navigation.Screens
 import com.hadiyarajesh.notex.ui.navigation.bottomNavItems
 import com.hadiyarajesh.notex.ui.theme.NoteXTheme
 
@@ -33,11 +34,17 @@ fun NoteXApp() {
                     exit = slideOutVertically(targetOffsetY = { it }),
                 ) {
                     MainBottomBar(
-                        navController = navController,
-                        items = bottomNavItems,
-                        onFABClick = {
-                            navController.navigate(Screens.AddNote.route)
-                        }
+                        destinations = bottomNavItems,
+                        onNavigateToDestination = { destination ->
+                            navController.navigate(destination.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
+                        currentDestination = navController.currentBackStackEntryAsState().value?.destination
                     )
                 }
             }

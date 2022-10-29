@@ -57,5 +57,5 @@ sealed class Screens(
 val bottomNavItems = listOf(
     Screens.Notes,
     Screens.Reminders,
-    Screens.Folders
+//    Screens.Folders
 )

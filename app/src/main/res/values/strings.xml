@@ -17,7 +17,7 @@
     <string name="cd_save">Save</string>
 
     <string name="hint_note_title">Title</string>
-    <string name="hint_note_description">write note here</string>
+    <string name="hint_note_description">Start typing…</string>
 
     <string name="reminder_instance_key" translatable="false">Reminder Instance</string>
     <string name="reminder_worker_tag" translatable="false">ReminderTag</string>

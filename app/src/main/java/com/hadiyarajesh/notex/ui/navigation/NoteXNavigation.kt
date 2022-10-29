@@ -1,31 +1,28 @@
 package com.hadiyarajesh.notex.ui.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.hadiyarajesh.notex.ui.folders.NoteFolderScreen
 import com.hadiyarajesh.notex.ui.folders.NoteFolderViewModel
-import com.hadiyarajesh.notex.ui.note.NotesScreen
-import com.hadiyarajesh.notex.ui.note.NotesViewModel
 import com.hadiyarajesh.notex.ui.note.add.AddNoteScreen
 import com.hadiyarajesh.notex.ui.note.add.AddNotesViewModel
+import com.hadiyarajesh.notex.ui.note.all.NotesScreen
+import com.hadiyarajesh.notex.ui.note.all.NotesViewModel
 import com.hadiyarajesh.notex.ui.reminders.RemindersScreen
 import com.hadiyarajesh.notex.ui.reminders.RemindersViewModel
 
@@ -50,19 +47,25 @@ fun NoteXNavigation(
             )
         }
 
-        composable(route = Screens.AddNote.route + "?noteId={noteId}",                             arguments = listOf(
-            navArgument(
-                name = "noteId"
-            ) {
-                type = NavType.LongType
-                defaultValue = -1
-            }
-        )
-        ) {
+        composable(
+            route = Screens.AddNote.route + "?noteId={noteId}",
+            arguments = listOf(
+                navArgument(name = "noteId") {
+                    type = NavType.LongType
+                    defaultValue = -1
+                }
+            )
+        ) { backStackEntry ->
             bottomBarState.value = false
-            val noteId = it.arguments?.getLong("noteId") ?: -1
-            val addNotesViewModel = hiltViewModel<AddNotesViewModel>()
-            AddNoteScreen(navController = navController, addNotesViewModel = addNotesViewModel, noteId =  if (noteId.compareTo(-1) == 0) null else noteId)
+
+            val noteId = backStackEntry.arguments?.getLong("noteId")
+            val addNotesViewModel: AddNotesViewModel = hiltViewModel()
+
+            AddNoteScreen(
+                navController = navController,
+                addNotesViewModel = addNotesViewModel,
+                noteId = if (noteId?.compareTo(-1) == 0) null else noteId
+            )
         }
 
         composable(route = Screens.Reminders.route) {
@@ -93,39 +96,36 @@ fun NoteXNavigation(
 
 @Composable
 fun MainBottomBar(
-    navController: NavController,
-    items: List<Screens>,
-    onFABClick: () -> Unit
+    destinations: List<Screens>,
+    onNavigateToDestination: (Screens) -> Unit,
+    currentDestination: NavDestination?
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    NavigationBar(tonalElevation = 0.dp) {
+        destinations.forEach { destination ->
+            val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
 
-    BottomAppBar(
-        actions = {
-            items.forEach { screen ->
-                val selected = navBackStackEntry?.destination?.route == screen.route
-
-                IconButton(
-                    onClick = {
-                        navController.navigate(screen.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+            NavigationBarItem(
+                selected = selected,
+                onClick = { onNavigateToDestination(destination) },
+                icon = {
+                    val icon = if (selected) {
+                        destination.selectedIcon
+                    } else {
+                        destination.icon
                     }
-                ) {
+
                     Icon(
-                        painter = painterResource(id = if (selected) screen.selectedIcon else screen.icon),
-                        contentDescription = screen.route
+                        painter = painterResource(id = icon),
+                        contentDescription = destination.route
                     )
-                }
-            }
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = onFABClick) {
-                Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
-            }
+                },
+                label = { Text(destination.route) }
+            )
         }
-    )
+    }
 }
+
+private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: Screens) =
+    this?.hierarchy?.any {
+        it.route?.contains(destination.route, true) ?: false
+    } ?: false
