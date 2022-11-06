@@ -12,7 +12,7 @@ import com.hadiyarajesh.notex.MainActivity
 import com.hadiyarajesh.notex.R
 
 class NotificationHelper {
-    
+
     fun createNotification(
         context: Context,
         notificationDTO: NotificationDTO
