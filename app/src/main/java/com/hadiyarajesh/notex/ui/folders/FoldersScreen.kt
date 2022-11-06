@@ -20,7 +20,6 @@ import com.hadiyarajesh.notex.database.entity.Folder
 import com.hadiyarajesh.notex.database.model.NoteFolder
 import com.hadiyarajesh.notex.database.model.ReminderFolder
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoldersScreen(
@@ -42,16 +41,12 @@ fun FoldersScreen(
         ) {
             AllFoldersView(onClick = {})
         }
-
     }
-
 }
-
-
 
 @Composable
 private fun AllFoldersView(
-   modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier,
     noteFolders: LazyPagingItems<NoteFolder>? = null,
     reminderFolder: LazyPagingItems<ReminderFolder>? = null,
     onClick: (Folder) -> Unit
@@ -61,7 +56,6 @@ private fun AllFoldersView(
             text = "Folders Screen",
             modifier = Modifier.fillMaxWidth()
         )
-
     }
 }
 
@@ -72,6 +66,6 @@ private fun AllFoldersView(
     device = Devices.PIXEL_2_XL
 )
 @Composable
-fun AllFoldersViewPreview(){
+fun AllFoldersViewPreview() {
     AllFoldersView(onClick = {})
 }
