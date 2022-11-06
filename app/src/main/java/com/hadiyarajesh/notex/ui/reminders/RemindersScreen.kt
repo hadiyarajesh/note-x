@@ -37,6 +37,7 @@ import com.hadiyarajesh.notex.ui.component.RetryItem
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -151,14 +152,18 @@ fun myContent(): LocalDateTime {
     val mCalendar = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         LocalDateTime.now()
     } else {
-        // TODO("VERSION.SDK_INT < O")
+        Calendar.getInstance()
     }
     val mHour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        mCalendar.hour
+        (mCalendar as LocalDateTime).hour
     } else {
-        // TODO("VERSION.SDK_INT < O")
+        (mCalendar as Calendar).get(Calendar.HOUR)
     }
-    val mMinute = mCalendar.minute
+    val mMinute =  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        (mCalendar as LocalDateTime).minute
+    } else {
+        (mCalendar as Calendar).get(Calendar.MINUTE)
+    }
     // Value for storing time as a string
     val mTime = remember { mutableStateOf("") }
     val mTimeStore = remember { mutableStateOf(mCalendar) }
@@ -172,7 +177,7 @@ fun myContent(): LocalDateTime {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     mTimeStore.value =
                         LocalDateTime.of(
-                            mCalendar.toLocalDate(), LocalTime.of(mHour, mMinute)
+                            (mCalendar as LocalDateTime).toLocalDate(), LocalTime.of(mHour, mMinute)
                         )
 
                     reminderViewModel.createReminder(
@@ -206,7 +211,7 @@ fun myContent(): LocalDateTime {
         // Display selected time
         Text(text = "Selected Time: ${mTime.value}", fontSize = 30.sp)
     }
-    return mTimeStore.value
+    return mTimeStore.value as LocalDateTime
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

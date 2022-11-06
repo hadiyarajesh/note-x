@@ -4,14 +4,15 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.hadiyarajesh.notex.MainActivity
 import com.hadiyarajesh.notex.R
-import kotlin.random.Random
 
 class NotificationHelper {
-
+    
     fun createNotification(
         context: Context,
         notificationDTO: NotificationDTO
@@ -22,14 +23,14 @@ class NotificationHelper {
             actionIntent, PendingIntent.FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
 
-        @SuppressWarnings("MagicNumber")
-        val notificationId = Random(121).nextInt(10000)
-
         val postponeIntent = Intent(context, NotificationBroadCastReceiver::class.java).apply {
             action = context.resources.getString(R.string.postpone_action)
             putExtra(context.resources.getString(R.string.worker_tag), notificationDTO.workerTag)
             putExtra(context.resources.getString(R.string.reminder_id), notificationDTO.reminderId)
-            putExtra(context.resources.getString(R.string.notification_id), notificationId)
+            putExtra(
+                context.resources.getString(R.string.notification_id),
+                notificationDTO.reminderId
+            )
         }
 
         val postponePendingIntent = PendingIntent.getBroadcast(
@@ -40,7 +41,10 @@ class NotificationHelper {
         val cancelIntent = Intent(context, NotificationBroadCastReceiver::class.java).apply {
             action = context.resources.getString(R.string.done_action)
             putExtra(context.resources.getString(R.string.worker_tag), notificationDTO.workerTag)
-            putExtra(context.resources.getString(R.string.notification_id), notificationId)
+            putExtra(
+                context.resources.getString(R.string.notification_id),
+                notificationDTO.reminderId
+            )
         }
 
         val cancelPendingIntent = PendingIntent.getBroadcast(
@@ -55,13 +59,21 @@ class NotificationHelper {
                 .setContentText(notificationDTO.subTitle)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(actionPendingIntent)
-                .addAction(R.drawable.ic_note_filled, context.getString(R.string.one_hour), postponePendingIntent)
-                .addAction(R.drawable.ic_note_filled, context.getString(R.string.done), cancelPendingIntent)
+                .addAction(
+                    R.drawable.ic_note_filled,
+                    context.getString(R.string.one_hour),
+                    postponePendingIntent
+                )
+                .addAction(
+                    R.drawable.ic_note_filled,
+                    context.getString(R.string.done),
+                    cancelPendingIntent
+                )
                 .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(context)) {
             // notificationId is a unique int for each notification that you must define
-            notify(notificationId, builder.build())
+            notify(notificationDTO.reminderId.toInt(), builder.build())
         }
     }
 }

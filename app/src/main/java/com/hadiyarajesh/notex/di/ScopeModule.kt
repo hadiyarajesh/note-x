@@ -1,6 +1,9 @@
 package com.hadiyarajesh.notex.di
 
+import com.hadiyarajesh.notex.database.dao.ReminderDao
+import com.hadiyarajesh.notex.reminder.ReminderService
 import com.hadiyarajesh.notex.reminder.notification.NotificationHelper
+import com.hadiyarajesh.notex.reminder.worker.ReminderWorkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,5 +27,11 @@ class ScopeModule {
     @Provides
     fun provideNotificationHelper(): NotificationHelper {
         return NotificationHelper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotificationService(db: ReminderDao): ReminderService {
+        return ReminderWorkManager(db)
     }
 }

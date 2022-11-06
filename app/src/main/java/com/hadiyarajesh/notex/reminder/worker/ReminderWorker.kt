@@ -7,7 +7,6 @@ import androidx.work.WorkerParameters
 import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.dao.ReminderDao
 import com.hadiyarajesh.notex.database.entity.Reminder
-import com.hadiyarajesh.notex.database.model.RepetitionStrategy
 import com.hadiyarajesh.notex.reminder.notification.NotificationDTO
 import com.hadiyarajesh.notex.reminder.notification.NotificationHelper
 import dagger.assisted.Assisted
@@ -19,7 +18,7 @@ import java.time.ZoneOffset
 class ReminderWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
-    val reminderDao: ReminderDao,
+    private val reminderDao: ReminderDao,
     private val notificationHelper: NotificationHelper
 ) : CoroutineWorker(appContext, workerParams) {
 
@@ -47,14 +46,11 @@ class ReminderWorker @AssistedInject constructor(
             )
         )
 
-        if (reminder.repeat != RepetitionStrategy.None) {
-            reminderWorkManager.createWorkRequestAndEnqueue(
-                reminderId = reminderId,
-                context = applicationContext,
-                isFirstTime = false,
-                time = reminder.reminderTime
-            )
-        }
+        reminderWorkManager.createWorkRequestAndEnqueue(
+            reminder = reminder,
+            context = applicationContext,
+            isFirstTime = false
+        )
         return Result.success()
     }
 }

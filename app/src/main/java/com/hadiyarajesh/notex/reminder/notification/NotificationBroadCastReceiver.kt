@@ -37,10 +37,9 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
                     intent.getStringExtra(context.resources.getString(R.string.worker_tag)) ?: ""
                 )
 
-                reminderWorkManager.createWorkRequestAndEnqueue(
+                reminderWorkManager.postponeRequestAndEnqueue(
                     context,
                     time = Instant.now().plus(1, ChronoUnit.HOURS),
-                    isFirstTime = false,
                     reminderId = intent.getLongExtra(
                         context.resources.getString(R.string.reminder_id),
                         -1
