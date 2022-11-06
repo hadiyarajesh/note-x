@@ -1,63 +1,66 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues/>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>EmptyClassBlock:NoteApi.kt$NoteApi${ }</ID>
-    <ID>FunctionNaming:AddNoteScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AddNoteScreen( navController: NavController )</ID>
-    <ID>FunctionNaming:AllNotesComponents.kt$@Composable fun NoteCard(note: Note)</ID>
-    <ID>FunctionNaming:AllNotesComponents.kt$@Preview @Composable fun NoteCardPrev()</ID>
-    <ID>FunctionNaming:NoteXApp.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun NoteXApp()</ID>
-    <ID>FunctionNaming:NoteXNavigation.kt$@Composable fun MainBottomBar( navController: NavController, items: List&lt;Screens>, onFABClick: () -> Unit )</ID>
-    <ID>FunctionNaming:NoteXNavigation.kt$@Composable fun NoteXNavigation( modifier: Modifier = Modifier, navController: NavHostController, bottomBarState: MutableState&lt;Boolean> )</ID>
-    <ID>FunctionNaming:NotesScreen.kt$@Composable private fun AllNotesView( modifier: Modifier = Modifier, notes: LazyPagingItems&lt;Note>, onClick: (Note) -> Unit, )</ID>
-    <ID>FunctionNaming:NotesScreen.kt$@Composable private fun NoteItem( modifier: Modifier = Modifier, note: Note, onClick: (Note) -> Unit, )</ID>
-    <ID>FunctionNaming:NotesScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun NotesScreen( navController: NavController, notesViewModel: NotesViewModel )</ID>
-    <ID>FunctionNaming:NotesScreen.kt$@Preview @Composable fun NoteItemPreview()</ID>
-    <ID>FunctionNaming:Other.kt$@Composable fun EmptyView( modifier: Modifier = Modifier, text: String )</ID>
-    <ID>FunctionNaming:Other.kt$@Composable fun ErrorText( modifier: Modifier = Modifier, text: String, color: Color = MaterialTheme.colorScheme.error, style: TextStyle = MaterialTheme.typography.labelMedium )</ID>
-    <ID>FunctionNaming:Other.kt$@Composable fun HorizontalSpacer(size: Int)</ID>
-    <ID>FunctionNaming:Other.kt$@Composable fun ImageItem( modifier: Modifier = Modifier, data: Any?, crossfadeValue: Int = 300, contentDescription: String? = null, contentScale: ContentScale = ContentScale.Crop, transformation: Transformation? = null, )</ID>
-    <ID>FunctionNaming:Other.kt$@Composable fun LoadingProgressBar( modifier: Modifier = Modifier, size: Dp = 40.dp, color: Color = MaterialTheme.colorScheme.primary, strokeWidth: Dp = 4.dp )</ID>
-    <ID>FunctionNaming:Other.kt$@Composable fun RetryItem( modifier: Modifier = Modifier, onRetryClick: () -> Unit )</ID>
-    <ID>FunctionNaming:Other.kt$@Composable fun SubComposeImageItem( modifier: Modifier = Modifier, data: Any?, crossfadeValue: Int = 300, contentDescription: String? = null, contentScale: ContentScale = ContentScale.Crop, transformation: Transformation? = null, )</ID>
-    <ID>FunctionNaming:Other.kt$@Composable fun VerticalSpacer(size: Int)</ID>
-    <ID>FunctionNaming:RemindersScreen.kt$@Composable private fun AllRemindersView( modifier: Modifier = Modifier, reminders: LazyPagingItems&lt;Reminder>, onClick: (Reminder) -> Unit, )</ID>
-    <ID>FunctionNaming:RemindersScreen.kt$@Composable private fun ReminderItem( modifier: Modifier = Modifier, reminder: Reminder, onClick: (Reminder) -> Unit, )</ID>
-    <ID>FunctionNaming:RemindersScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun RemindersScreen( navController: NavController, remindersViewModel: RemindersViewModel )</ID>
-    <ID>FunctionNaming:TextComposables.kt$@Composable fun TextSemiBold( content: String, modifier: Modifier? = Modifier, textStyle: TextStyle? = null, color: Color? = null )</ID>
-    <ID>FunctionNaming:Theme.kt$@Composable fun NoteXTheme( darkTheme: Boolean = isSystemInDarkTheme(), // Dynamic color is available on Android 12+ dynamicColor: Boolean = true, content: @Composable () -> Unit )</ID>
-    <ID>LongParameterList:Other.kt$( modifier: Modifier = Modifier, data: Any?, crossfadeValue: Int = 300, contentDescription: String? = null, contentScale: ContentScale = ContentScale.Crop, transformation: Transformation? = null, )</ID>
+    <ID>ImplicitDefaultLocale:AddNotesViewModel.kt$AddNotesViewModel$String.format("#%06X", 0xFFFFFF and color)</ID>
+    <ID>LongMethod:AddNoteScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AddNoteScreen( navController: NavController, addNotesViewModel: AddNotesViewModel, noteId: Long? )</ID>
+    <ID>LongMethod:NoteFolderScreen.kt$@Composable fun NoteFolderScreen( modifier: Modifier = Modifier, navController: NavController, folderViewModel: NoteFolderViewModel )</ID>
+    <ID>LongMethod:NoteFolderScreen.kt$@Preview @Composable private fun NoteFolderScreenPreview()</ID>
+    <ID>MagicNumber:AddNotesViewModel.kt$AddNotesViewModel$0xFFFFFF</ID>
     <ID>MagicNumber:Color.kt$0xFF625b71</ID>
     <ID>MagicNumber:Color.kt$0xFF6650a4</ID>
     <ID>MagicNumber:Color.kt$0xFF7D5260</ID>
     <ID>MagicNumber:Color.kt$0xFFCCC2DC</ID>
     <ID>MagicNumber:Color.kt$0xFFD0BCFF</ID>
+    <ID>MagicNumber:Color.kt$0xFFEEDF9B</ID>
     <ID>MagicNumber:Color.kt$0xFFEFB8C8</ID>
-    <ID>MatchingDeclarationName:Scope.kt$ApplicationScope</ID>
+    <ID>MagicNumber:Color.kt$0xFFF3C279</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFFFFF</ID>
+    <ID>MagicNumber:Color.kt$0xff4c4c4c</ID>
+    <ID>MagicNumber:Color.kt$0xff81deea</ID>
+    <ID>MagicNumber:Color.kt$0xffcf94da</ID>
+    <ID>MagicNumber:Color.kt$0xffe7ed9b</ID>
+    <ID>MagicNumber:Color.kt$0xfff48fb1</ID>
+    <ID>MagicNumber:Color.kt$0xffffab91</ID>
+    <ID>MagicNumber:NoteFolderScreen.kt$100</ID>
     <ID>MaxLineLength:FolderDao.kt$FolderDao$* This method requires Room to run two queries, so add the @Transaction annotation to this method to ensure that the whole operation is performed atomically.</ID>
-    <ID>MaxLineLength:NotesScreen.kt$loadState.refresh is LoadState.NotLoading &amp;&amp; loadState.append.endOfPaginationReached &amp;&amp; notes.itemCount &lt; 1</ID>
-    <ID>MaxLineLength:RemindersScreen.kt$loadState.refresh is LoadState.NotLoading &amp;&amp; loadState.append.endOfPaginationReached &amp;&amp; reminders.itemCount &lt; 1</ID>
-    <ID>NewLineAtEndOfFile:AllNotesComponents.kt$com.hadiyarajesh.notex.ui.component.AllNotesComponents.kt</ID>
+    <ID>NewLineAtEndOfFile:AddNotesViewModel.kt$com.hadiyarajesh.notex.ui.note.add.AddNotesViewModel.kt</ID>
     <ID>NewLineAtEndOfFile:Color.kt$com.hadiyarajesh.notex.ui.theme.Color.kt</ID>
     <ID>NewLineAtEndOfFile:ExampleUnitTest.kt$com.hadiyarajesh.notex.ExampleUnitTest.kt</ID>
+    <ID>NewLineAtEndOfFile:FoldersScreen.kt$com.hadiyarajesh.notex.ui.folders.FoldersScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:FoldersViewModel.kt$com.hadiyarajesh.notex.ui.folders.FoldersViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:NoteFolderViewModel.kt$com.hadiyarajesh.notex.ui.folders.NoteFolderViewModel.kt</ID>
     <ID>NewLineAtEndOfFile:Screens.kt$com.hadiyarajesh.notex.ui.navigation.Screens.kt</ID>
     <ID>NewLineAtEndOfFile:TextComposables.kt$com.hadiyarajesh.notex.ui.component.TextComposables.kt</ID>
-    <ID>NewLineAtEndOfFile:Type.kt$com.hadiyarajesh.notex.ui.theme.Type.kt</ID>
     <ID>TooManyFunctions:NoteDao.kt$NoteDao</ID>
-    <ID>UnusedPrivateMember:AddNoteScreen.kt$navController: NavController</ID>
-    <ID>UnusedPrivateMember:NotesScreen.kt$navController: NavController</ID>
-    <ID>UnusedPrivateMember:NotesScreen.kt$onClick: (Note) -> Unit</ID>
+    <ID>TooManyFunctions:NotesRepository.kt$NotesRepository</ID>
+    <ID>UnusedPrivateMember:AddNoteScreen.kt$@Composable private fun ShowColor( state: MutableState&lt;NoteState&gt;, noteBackground: Animatable&lt;Color, AnimationVector4D&gt; )</ID>
+    <ID>UnusedPrivateMember:FoldersScreen.kt$navController: NavController</ID>
+    <ID>UnusedPrivateMember:FoldersScreen.kt$noteFolders: LazyPagingItems&lt;NoteFolder&gt;? = null</ID>
+    <ID>UnusedPrivateMember:FoldersScreen.kt$onClick: (Folder) -&gt; Unit</ID>
+    <ID>UnusedPrivateMember:FoldersScreen.kt$reminderFolder: LazyPagingItems&lt;ReminderFolder&gt;? = null</ID>
+    <ID>UnusedPrivateMember:FoldersScreen.kt$val context = LocalContext.current</ID>
+    <ID>UnusedPrivateMember:FoldersScreen.kt$val notesFolders = remember { foldersViewModel.noteFolders }.collectAsLazyPagingItems()</ID>
+    <ID>UnusedPrivateMember:FoldersScreen.kt$val scope = rememberCoroutineScope()</ID>
+    <ID>UnusedPrivateMember:NoteFolderScreen.kt$@Preview @Composable private fun NoteFolderScreenPreview()</ID>
+    <ID>UnusedPrivateMember:NoteFolderScreen.kt$onClick: () -&gt; Unit</ID>
+    <ID>UnusedPrivateMember:NoteFolderScreen.kt$val context = LocalContext.current</ID>
+    <ID>UnusedPrivateMember:NoteFolderScreen.kt$val scope = rememberCoroutineScope()</ID>
     <ID>UnusedPrivateMember:NotesScreen.kt$val context = LocalContext.current</ID>
     <ID>UnusedPrivateMember:NotesScreen.kt$val scope = rememberCoroutineScope()</ID>
     <ID>UnusedPrivateMember:RemindersScreen.kt$navController: NavController</ID>
-    <ID>UnusedPrivateMember:RemindersScreen.kt$onClick: (Reminder) -> Unit</ID>
+    <ID>UnusedPrivateMember:RemindersScreen.kt$onClick: (Reminder) -&gt; Unit</ID>
     <ID>UnusedPrivateMember:RemindersScreen.kt$val context = LocalContext.current</ID>
     <ID>UnusedPrivateMember:RemindersScreen.kt$val scope = rememberCoroutineScope()</ID>
-    <ID>WildcardImport:AllNotesComponents.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:AddNoteScreen.kt$import androidx.compose.foundation.*</ID>
+    <ID>WildcardImport:AddNoteScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:AddNoteScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:AddNoteScreen.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:ExampleUnitTest.kt$import org.junit.Assert.*</ID>
     <ID>WildcardImport:FolderDao.kt$import androidx.room.*</ID>
+    <ID>WildcardImport:FoldersScreen.kt$import androidx.compose.foundation.layout.*</ID>
     <ID>WildcardImport:InstantAdapter.kt$import com.squareup.moshi.*</ID>
-    <ID>WildcardImport:NoteDao.kt$import androidx.room.*</ID>
+    <ID>WildcardImport:NoteFolderScreen.kt$import androidx.compose.foundation.layout.*</ID>
     <ID>WildcardImport:NotesScreen.kt$import androidx.compose.foundation.layout.*</ID>
     <ID>WildcardImport:Other.kt$import androidx.compose.foundation.layout.*</ID>
     <ID>WildcardImport:ReminderDao.kt$import androidx.room.*</ID>

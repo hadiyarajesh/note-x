@@ -50,7 +50,9 @@ fun NoteXNavigation(
         composable(
             route = Screens.AddNote.route + "?noteId={noteId}",
             arguments = listOf(
-                navArgument(name = "noteId") {
+                navArgument(
+                    name = "noteId"
+                ) {
                     type = NavType.LongType
                     defaultValue = -1
                 }

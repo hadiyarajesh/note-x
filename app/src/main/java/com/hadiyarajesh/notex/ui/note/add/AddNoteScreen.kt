@@ -32,7 +32,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddNoteScreen(
-    navController: NavController, addNotesViewModel: AddNotesViewModel,
+    navController: NavController,
+    addNotesViewModel: AddNotesViewModel,
     noteId: Long?
 ) {
     val state = remember { mutableStateOf(NoteState()) }
@@ -94,6 +95,7 @@ fun AddNoteScreen(
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
+
         ) {
             Column(
                 modifier = Modifier.padding(
@@ -204,13 +206,13 @@ private fun ShowColor(
     }
 }
 
-//fun checkNoteIsNotEmpty(noteState: NoteState): Boolean {
+// fun checkNoteIsNotEmpty(noteState: NoteState): Boolean {
 //    return (noteState.title.value.isNotBlank() || noteState.noteDesc.value.isNotBlank())
-//}
+// }
 
-//fun checkNoteIsNotEmpty(noteState: NoteState): Boolean {
+// fun checkNoteIsNotEmpty(noteState: NoteState): Boolean {
 //    return !(noteState.title.value.isNullOrBlank() || noteState.noteDesc.value.isNullOrBlank())
-//}
+// }
 fun checkNoteIsNotEmpty(noteState: NoteState): Boolean {
     return !noteState.noteDesc.value.isNullOrBlank()
 }

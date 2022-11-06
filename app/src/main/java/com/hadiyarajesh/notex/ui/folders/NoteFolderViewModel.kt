@@ -8,9 +8,9 @@ import com.hadiyarajesh.notex.database.model.FolderType
 import com.hadiyarajesh.notex.database.model.NoteFolder
 import com.hadiyarajesh.notex.repository.folder.FolderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class NoteFolderViewModel @Inject constructor(

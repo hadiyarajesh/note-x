@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.hadiyarajesh.notex.database.dao.NoteDao
 import com.hadiyarajesh.notex.database.entity.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.Instant
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.time.Instant
-import javax.inject.Inject
 
 @HiltViewModel
 class AddNotesViewModel @Inject constructor(private val noteDao: NoteDao) : ViewModel() {
@@ -26,7 +26,6 @@ class AddNotesViewModel @Inject constructor(private val noteDao: NoteDao) : View
                     updatedOn = Instant.now()
                 )
             )
-
         }
     }
 

@@ -26,6 +26,7 @@ local.properties
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 /.idea/misc.xml
+/.idea/gradle.xml
 /out/
 
 .DS_Store

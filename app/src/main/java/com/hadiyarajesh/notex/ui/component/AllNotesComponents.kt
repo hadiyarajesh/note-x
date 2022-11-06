@@ -39,7 +39,7 @@ fun NoteCard(note: Note, onClick: (Note) -> Unit) {
                 Text(
                     text = it,
                     fontWeight = FontWeight.SemiBold,
-                    style =  MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleLarge,
                     maxLines = 1,
                 )
             }
@@ -85,7 +85,6 @@ fun NoteCard(note: Note, onClick: (Note) -> Unit) {
                         content = InstantConverter.getLocalDate(note.createdOn).toString()
                     )
                 }
-
             }
         }
     }
