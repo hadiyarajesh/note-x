@@ -6,8 +6,10 @@ import android.content.Intent
 import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.reminder.worker.ReminderWorkManager
+import com.hadiyarajesh.notex.utility.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -26,15 +28,15 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         when (intent.action) {
-            context.resources.getString(R.string.done_action) ->
+            context.getString(R.string.complete_action) ->
                 reminderWorkManager.cancelWorkRequest(
                     context,
-                    intent.getStringExtra(context.resources.getString(R.string.worker_tag)) ?: ""
+                    intent.getStringExtra(context.getString(R.string.worker_tag)) ?: ""
                 )
-            context.resources.getString(R.string.postpone_action) -> {
+            context.getString(R.string.postpone_action) -> {
                 reminderWorkManager.cancelWorkRequest(
                     context,
-                    intent.getStringExtra(context.resources.getString(R.string.worker_tag)) ?: ""
+                    intent.getStringExtra(context.getString(R.string.worker_tag)) ?: ""
                 )
 
                 reminderWorkManager.createWorkRequestAndEnqueue(
@@ -42,7 +44,7 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
                     time = Instant.now().plus(1, ChronoUnit.HOURS),
                     isFirstTime = false,
                     reminderId = intent.getLongExtra(
-                        context.resources.getString(R.string.reminder_id),
+                        context.getString(R.string.reminder_id),
                         -1
                     )
                 )
@@ -51,7 +53,7 @@ class NotificationBroadCastReceiver : HiltBroadcastReceiver() {
         }
 
         with(NotificationManagerCompat.from(context)) {
-            cancel(intent.getIntExtra(context.resources.getString(R.string.notification_id), -1))
+            cancel(intent.getIntExtra(Constants.NOTIFICATION_ID, -1))
         }
     }
 }
