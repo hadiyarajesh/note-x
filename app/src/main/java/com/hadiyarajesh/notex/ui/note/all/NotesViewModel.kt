@@ -7,11 +7,11 @@ import androidx.paging.cachedIn
 import com.hadiyarajesh.notex.database.entity.Note
 import com.hadiyarajesh.notex.repository.notes.NotesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel @Inject constructor(
@@ -82,16 +82,15 @@ class NotesViewModel @Inject constructor(
         }
     }
 
-
     fun getNote(noteId: Long) {
         viewModelScope.launch {
             _note.value = notesRepository.getNote(noteId)
         }
     }
 
-    fun addToFolder(noteId: Long,folderId: Long) {
+    fun addToFolder(noteId: Long, folderId: Long) {
         viewModelScope.launch {
-            notesRepository.addToFolder(noteId,folderId)
+            notesRepository.addToFolder(noteId, folderId)
         }
     }
 }

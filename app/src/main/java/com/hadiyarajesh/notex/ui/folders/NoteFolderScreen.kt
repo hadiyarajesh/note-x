@@ -111,7 +111,6 @@ fun NoteFolderScreen(
                             navController.navigate(Screens.AddNote.route)
                         }
                 )
-
             }
 
             Row(

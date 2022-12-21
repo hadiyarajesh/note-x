@@ -46,9 +46,7 @@ class NotesRepository @Inject constructor(
     /**
      * Updates the provided Note in the database.
      */
-    suspend fun updateNote(note: Note,parentFolderId: Long?) = noteDao.updateNote(note, parentFolderId)
-
-
+    suspend fun updateNote(note: Note, parentFolderId: Long?) = noteDao.updateNote(note, parentFolderId)
 
     suspend fun deleteNote(note: Note): Int = noteDao.delete(note)
 
@@ -58,13 +56,9 @@ class NotesRepository @Inject constructor(
 
     suspend fun deleteAllNotes(): Int = noteDao.deleteAll()
 
-
-
     suspend fun archive(noteId: Long) = noteDao.markAsArchived(noteId)
 
     suspend fun unarchive(noteId: Long) = noteDao.markAsUnarchived(noteId)
 
-
-
-    suspend fun addToFolder(noteId: Long, folderId: Long) = noteDao.addToFolder(noteId,folderId)
+    suspend fun addToFolder(noteId: Long, folderId: Long) = noteDao.addToFolder(noteId, folderId)
 }

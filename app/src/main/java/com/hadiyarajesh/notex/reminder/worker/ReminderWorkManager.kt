@@ -8,13 +8,13 @@ import androidx.work.WorkRequest
 import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.dao.ReminderDao
 import com.hadiyarajesh.notex.database.model.RepetitionStrategy
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ReminderWorkManager @Inject constructor(var reminderDao: ReminderDao) {
     fun createWorkRequestAndEnqueue(

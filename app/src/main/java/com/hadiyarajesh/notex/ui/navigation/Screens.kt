@@ -20,7 +20,7 @@ sealed class Screens(
         selectedIcon = R.drawable.ic_note_filled
     )
 
-    object Folders:Screens(
+    object Folders : Screens(
         route = "Folders",
         icon = R.drawable.ic_baseline_folder_open,
         selectedIcon = R.drawable.ic_baseline_folder
