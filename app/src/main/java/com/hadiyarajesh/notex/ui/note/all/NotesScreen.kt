@@ -27,7 +27,7 @@ import com.hadiyarajesh.notex.ui.component.EmptyView
 import com.hadiyarajesh.notex.ui.component.LoadingProgressBar
 import com.hadiyarajesh.notex.ui.component.NoteCard
 import com.hadiyarajesh.notex.ui.component.RetryItem
-import com.hadiyarajesh.notex.ui.navigation.Screens
+import com.hadiyarajesh.notex.ui.navigation.TopLevelDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +43,7 @@ fun NotesScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate(Screens.AddNote.route)
+                    navController.navigate(TopLevelDestination.AddNote.route)
                 }
             ) {
                 Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
@@ -59,7 +59,7 @@ fun NotesScreen(
             AllNotesView(
                 notes = notes,
                 onClick = { note ->
-                    navController.navigate(Screens.AddNote.route + "?noteId=${note.noteId}")
+                    navController.navigate(TopLevelDestination.AddNote.route + "?noteId=${note.noteId}")
                 }
             )
         }

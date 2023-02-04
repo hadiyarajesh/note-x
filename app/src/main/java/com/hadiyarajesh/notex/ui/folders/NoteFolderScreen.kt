@@ -2,7 +2,14 @@ package com.hadiyarajesh.notex.ui.folders
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -30,7 +37,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.hadiyarajesh.notex.R
 import com.hadiyarajesh.notex.database.entity.Folder
 import com.hadiyarajesh.notex.database.model.FolderType.NoteFolder
-import com.hadiyarajesh.notex.ui.navigation.Screens
+import com.hadiyarajesh.notex.ui.navigation.TopLevelDestination
 import java.time.Instant
 
 @Composable
@@ -108,7 +115,7 @@ fun NoteFolderScreen(
                     modifier = modifier
                         .padding(end = 10.dp)
                         .clickable {
-                            navController.navigate(Screens.AddNote.route)
+                            navController.navigate(TopLevelDestination.AddNote.route)
                         }
                 )
             }
